@@ -33,7 +33,15 @@ export default defineComponent({
     <q-form class="row justify-center" @submit.prevent="handlePasswordReset">
       <h1 class="col-12 text-center">Password recovery</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input label="Nova senha" v-model="password" />
+        <q-input
+          label="New password"
+          v-model="password"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || 'Password is required',
+          (val) => (val && val.length >= 6) || 'Password must contain at least 6 characters',
+        ]"
+          hint="Password must contain at least 6 characters"
+        />
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
