@@ -15,7 +15,7 @@ export default defineComponent({
 
 <template>
   <q-page class="flex flex-center">
-      <h1>Olá, {{ user.user_metadata.name }}!</h1>
+      <h1>Hi, {{ user.user_metadata.name }}!</h1>
       <p>{{ user }}</p>
   </q-page>
 </template>

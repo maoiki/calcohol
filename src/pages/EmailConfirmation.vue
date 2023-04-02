@@ -8,8 +8,8 @@ export default defineComponent({
 
 <template>
   <q-page padding>
-    <h1>Obrigado por se registrar!</h1>
-    <p class="text-body1">Por favor confirme seu email para finalizar o cadastro: <strong>{{ $route.query.email}}</strong> </p>
+    <h1>Thanks for registering!</h1>
+    <p class="text-body1">Please confirm your email address to complete the registration: <strong>{{ $route.query.email}}</strong> </p>
   </q-page>
 </template>
 
