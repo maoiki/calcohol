@@ -2,7 +2,7 @@
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "ResetPasswordPage",
@@ -12,10 +12,7 @@ export default defineComponent({
 
     const { notifyError, notifySuccess } = useNotify();
 
-    const route = useRoute();
     const router = useRouter();
-
-    const token = route.query.token;
 
     const password = ref("");
 
@@ -23,7 +20,7 @@ export default defineComponent({
       try {
         await resetPassword(password.value);
         notifySuccess();
-        router.push({ name: "login" });  
+        router.push({ name: "me" });  
       } catch (error) {
         notifyError(error.message);
       }
@@ -59,6 +56,14 @@ export default defineComponent({
             type="submit"
             rounded
             outline
+          />
+          <q-btn
+            label="Go back"
+            color="primary"
+            class="full-width"
+            :to="{ name: 'me' }"
+            rounded
+            flat
           />
         </div>
       </div>

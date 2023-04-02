@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
@@ -9,13 +9,19 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const { login } = useAuthUser();
+    const { login, isLoggedIn } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
 
     const form = ref({
       email: "",
       password: "",
+    });
+
+    onMounted(() => {
+      if (isLoggedIn) {
+        router.push({ name: "me" });
+      }
     });
 
     const handleLogin = async () => {
@@ -41,20 +47,24 @@ export default defineComponent({
     <q-form class="row justify-center" @submit.prevent="handleLogin">
       <h1 class="col-12 text-center">Login</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input 
-          label="Email" 
-          v-model="form.email" 
+        <q-input
+          label="Email"
+          v-model="form.email"
           lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Email is required']"
-          type="email" />
-        <q-input 
-          label="Password" 
+          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+          type="email"
+        />
+        <q-input
+          label="Password"
           v-model="form.password"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Password is required',
-          (val) => (val && val.length >= 6) || 'Password must contain at least 6 characters',
-        ]"
-          />
+          :rules="[
+            (val) => (val && val.length > 0) || 'Password is required',
+            (val) =>
+              (val && val.length >= 6) ||
+              'Password must contain at least 6 characters',
+          ]"
+        />
         <div class="full-width q-pt-md">
           <q-btn
             label="Login"

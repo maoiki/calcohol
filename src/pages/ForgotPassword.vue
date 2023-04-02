@@ -1,6 +1,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
+import useNotify from "src/composables/UseNotify";
 
 export default defineComponent({
   name: "ForgotPasswordPage",
@@ -8,11 +9,17 @@ export default defineComponent({
   setup() {
     const { sendPasswordResetEmail } = useAuthUser();
 
+    const { notifyError, notifySuccess } = useNotify();
+
     const email = ref("");
 
     const handleForgotPassword = async () => {
-      await sendPasswordResetEmail(email.value);
-      alert(`Recovery email sent to: ${email.value}`);
+      try {
+        await sendPasswordResetEmail(email.value);
+        notifySuccess(`Recovery email sent to: ${email.value}`);
+      } catch (error) {
+        notifyError(error.message);
+      }
     };
 
     return {

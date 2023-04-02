@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
@@ -10,7 +10,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const { register } = useAuthUser();
+    const { register, isLoggedIn } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
 
@@ -18,6 +18,12 @@ export default defineComponent({
       email: "",
       password: "",
       name: "",
+    });
+
+    onMounted(() => {
+      if (isLoggedIn) {
+        router.push({ name: "me" });
+      }
     });
 
     const handleRegister = async () => {
@@ -45,7 +51,7 @@ export default defineComponent({
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handleRegister">
       <h1 class="col-12 text-center">Register</h1>
-      <div class="col-md-4 col-sm-6 col-xs-10 ">
+      <div class="col-md-4 col-sm-6 col-xs-10">
         <q-input
           label="Name"
           v-model="form.name"
