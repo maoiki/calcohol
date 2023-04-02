@@ -1,6 +1,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
+import useNotify from "src/composables/UseNotify";
 import { useRouter, useRoute } from "vue-router";
 
 export default defineComponent({
@@ -8,6 +9,8 @@ export default defineComponent({
 
   setup() {
     const { resetPassword } = useAuthUser();
+
+    const { notifyError, notifySuccess } = useNotify();
 
     const route = useRoute();
     const router = useRouter();
@@ -17,8 +20,13 @@ export default defineComponent({
     const password = ref("");
 
     const handlePasswordReset = async () => {
-      await resetPassword(token, password.value);
-      router.push({ name: "login" });
+      try {
+        await resetPassword(password.value);
+        notifySuccess();
+        router.push({ name: "login" });  
+      } catch (error) {
+        notifyError(error.message);
+      }
     };
 
     return {
@@ -31,7 +39,7 @@ export default defineComponent({
 <template>
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handlePasswordReset">
-      <h1 class="col-12 text-center">Password recovery</h1>
+      <h1 class="col-12 text-center">Password reset</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
           label="New password"
