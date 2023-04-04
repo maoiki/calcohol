@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
@@ -18,12 +18,6 @@ export default defineComponent({
       email: "",
       password: "",
       name: "",
-    });
-
-    onMounted(() => {
-      if (isLoggedIn) {
-        router.push({ name: "me" });
-      }
     });
 
     const handleRegister = async () => {

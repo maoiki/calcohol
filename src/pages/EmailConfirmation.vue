@@ -1,20 +1,8 @@
 <script>
-import { defineComponent, onMounted } from "vue";
-import useAuthUser from "src/composables/UseAuthUser";
-import { useRouter } from "vue-router";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "EmailConfirmationPage",
-  setup() {
-    const router = useRouter();
-    const { isLoggedIn } = useAuthUser();
-
-    onMounted(() => {
-      if (isLoggedIn) {
-        router.push({ name: "me" });
-      }
-    });
-  },
 });
 </script>
 
