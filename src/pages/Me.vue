@@ -40,6 +40,27 @@ export default defineComponent({
         sortable: true,
       },
       {
+        name: "abv",
+        label: "abv",
+        align: "left",
+        field: "abv",
+        sortable: true,
+      },
+      {
+        name: "ml",
+        label: "ml",
+        align: "left",
+        field: "ml",
+        sortable: true,
+      },
+      {
+        name: "price",
+        label: "price",
+        align: "left",
+        field: "price",
+        sortable: true,
+      },
+      {
         name: "actions",
         align: "right",
         label: "actions",
@@ -63,41 +84,28 @@ export default defineComponent({
     <h1>Hi, {{ user.user_metadata.name }}!</h1>
     <div class="col-12">
       <q-table
-        title=" @@@ TITULO @@@"
         :rows="beverages"
         :columns="columns"
         row-key="name"
         :loading="loading"
       >
-      <template v-slot:top>
-          <span class="text-h6">
-            Titulo
-          </span>
+        <template v-slot:top>
+          <span class="text-h6"> Beverages </span>
           <q-space />
           <q-btn
             v-if="$q.platform.is.desktop"
             label="Add New"
             color="primary"
             icon="add"
-            dense
+            :to="{ name: 'form-beverage' }"
           />
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-x-sm">
-            <q-btn
-              icon="edit"
-              color="info"
-              dense
-              size="sm"
-            >
+            <q-btn icon="edit" color="info" dense size="sm">
               <q-tooltip> Edit </q-tooltip>
             </q-btn>
-            <q-btn
-              icon="delete"
-              color="negative"
-              dense
-              size="sm"
-            >
+            <q-btn icon="delete" color="negative" dense size="sm">
               <q-tooltip> Delete </q-tooltip>
             </q-btn>
           </q-td>

@@ -36,6 +36,7 @@ const routes = [
         component: () => import("pages/IndexPage.vue"),
       },
       { path: "me", name: "me", component: () => import("pages/Me.vue") },
+      { path: "form", name: "form-beverage", component: () => import("pages/FormBeverage.vue") },
       // { path: '', component: () => import('pages/IndexPage.vue') }
     ],
     meta: {
