@@ -1,6 +1,6 @@
 <script>
-import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, ref, onMounted, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
 
@@ -14,7 +14,9 @@ export default defineComponent({
 
     const router = useRouter();
 
-    const { post } = useApi();
+    const route = useRoute();
+
+    const { post, getById, update } = useApi();
 
     const form = ref({
       name: "",
@@ -23,19 +25,45 @@ export default defineComponent({
       price: "",
     });
 
-    const handleSubmit = async () => {
+    let beverage = {};
+
+    const handleGetBeverage = async (id) => {
       try {
-        await post(table, form.value);
-        notifySuccess();
-        router.push({ name: "me" });
+        beverage = await getById(table, id);
+        form.value = beverage;
       } catch (error) {
         notifyError(error.message);
       }
     };
 
+    const handleSubmit = async () => {
+      try {
+        if (isUpdate.value) {
+          await update(table, form.value);
+          notifySuccess("Update Successfully");
+        } else {
+          await post(table, form.value);
+          notifySuccess("Saved Successfully");
+        }
+        router.push({ name: "me" });
+      } catch (error) {
+        notifyError(error.message);
+      }
+    };
+    
+
+    const isUpdate = computed(() => route.params.id);
+
+    onMounted(() => {
+      if (isUpdate.value) {
+        handleGetBeverage(isUpdate.value);
+      }
+    });
+
     return {
       form,
       handleSubmit,
+      isUpdate,
     };
   },
 });
@@ -61,9 +89,12 @@ export default defineComponent({
         filled
         v-model.number="form.ml"
         label="Amount of ml"
-        
         lazy-rules
-        :rules="[(val) => val > 0 && Number.isInteger(val) || 'Amount is required and must be a positive integer']"
+        :rules="[
+          (val) =>
+            (val > 0 && Number.isInteger(val)) ||
+            'Amount is required and must be a positive integer',
+        ]"
       />
       <q-input
         clearable
@@ -72,7 +103,9 @@ export default defineComponent({
         v-model.number="form.abv"
         label="ABV"
         lazy-rules
-        :rules="[(val) => val > 0 || 'ABV is required and must be a positive number']"
+        :rules="[
+          (val) => val > 0 || 'ABV is required and must be a positive number',
+        ]"
       />
       <q-input
         clearable
@@ -81,11 +114,13 @@ export default defineComponent({
         v-model.number="form.price"
         label="Price"
         lazy-rules
-        :rules="[(val) => val > 0 || 'Price is required and must be a positive number']"
+        :rules="[
+          (val) => val > 0 || 'Price is required and must be a positive number',
+        ]"
       />
 
       <q-btn
-        label="Save"
+        :label="isUpdate ? 'Update' : 'Save'"
         rounded
         color="primary"
         class="full-width"

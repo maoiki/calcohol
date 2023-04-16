@@ -3,6 +3,8 @@ import useAuthUser from "src/composables/UseAuthUser";
 import { defineComponent, ref, onMounted } from "vue";
 import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MePage",
@@ -11,17 +13,44 @@ export default defineComponent({
 
     const { user } = useAuthUser();
 
-    const { list } = useApi();
+    const router = useRouter();
 
-    const { notifyError } = useNotify();
+    const $q = useQuasar();
+
+    const { list, remove } = useApi();
+
+    const { notifyError, notifySuccess } = useNotify();
 
     const beverages = ref([]);
+
+    const table = "beverages"
 
     const handleListBeverages = async () => {
       try {
         loading.value = true;
-        beverages.value = await list("beverages");
+        beverages.value = await list(table);
         loading.value = false;
+      } catch (error) {
+        notifyError(error.message);
+      }
+    };
+
+    const handleEdit = (beverage) => {
+      router.push({ name: "form-beverage", params: { id: beverage.id } });
+    };
+
+    const handleRemoveBeverage = async (beverage) => {
+      try {
+        $q.dialog({
+          title: "Confirm",
+          message: `Do you really want to delete ${beverage.name} ?`,
+          cancel: true,
+          persistent: false,
+        }).onOk(async () => {
+          await remove(table, beverage.id);
+          notifySuccess("Successfully deleted");
+          handleListBeverages();
+        });
       } catch (error) {
         notifyError(error.message);
       }
@@ -74,6 +103,8 @@ export default defineComponent({
       beverages,
       columns,
       loading,
+      handleEdit,
+      handleRemoveBeverage,
     };
   },
 });
@@ -102,10 +133,22 @@ export default defineComponent({
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-x-sm">
-            <q-btn icon="edit" color="info" dense size="sm">
+            <q-btn
+              icon="edit"
+              color="info"
+              dense
+              size="sm"
+              @click="handleEdit(props.row)"
+            >
               <q-tooltip> Edit </q-tooltip>
             </q-btn>
-            <q-btn icon="delete" color="negative" dense size="sm">
+            <q-btn
+              icon="delete"
+              color="negative"
+              dense
+              size="sm"
+              @click="handleRemoveBeverage(props.row)"
+            >
               <q-tooltip> Delete </q-tooltip>
             </q-btn>
           </q-td>
