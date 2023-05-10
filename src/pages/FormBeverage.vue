@@ -113,6 +113,7 @@ export default defineComponent({
         filled
         v-model.number="form.price"
         label="Price"
+        prefix="R$"
         lazy-rules
         :rules="[
           (val) => val > 0 || 'Price is required and must be a positive number',
