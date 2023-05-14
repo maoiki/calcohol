@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import {
   formatCurrency,
   formatPercent,
@@ -45,6 +46,9 @@ const columnsBeverage = [
   },
 ];
 
-export {
-  columnsBeverage
-}
+const noPagination = ref({
+  page: 1,
+  rowsPerPage: 0,
+});
+
+export { columnsBeverage, noPagination };

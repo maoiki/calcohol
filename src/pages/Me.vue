@@ -5,15 +5,21 @@ import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import { columnsBeverage } from "src/pages/table";
+import { columnsBeverage, noPagination } from "src/pages/table";
 import {
   formatCurrency,
   formatPercent,
   formatUnitMeasure,
 } from "src/utils/format";
 
+import DialogBeverageDetails from "components/DialogBeverageDetails.vue";
+
 export default defineComponent({
   name: "MePage",
+  components: {
+    DialogBeverageDetails,
+  },
+
   setup() {
     const loading = ref(true);
 
@@ -32,6 +38,15 @@ export default defineComponent({
     const beverages = ref([]);
 
     const table = "beverages";
+
+    const showDialogDetails = ref(false);
+
+    const beverageDetails = ref([]);
+
+    const handleShowDetails = (beverage) => {
+      beverageDetails.value = beverage;
+      showDialogDetails.value = true;
+    };
 
     const handleListBeverages = async () => {
       try {
@@ -72,6 +87,9 @@ export default defineComponent({
       user,
       beverages,
       loading,
+      showDialogDetails,
+      beverageDetails,
+      handleShowDetails,
       handleEdit,
       handleRemoveBeverage,
       filter,
@@ -79,6 +97,7 @@ export default defineComponent({
       formatCurrency,
       formatPercent,
       formatUnitMeasure,
+      noPagination
     };
   },
 });
@@ -86,7 +105,7 @@ export default defineComponent({
 
 <template>
   <q-page padding>
-    <h1>Hi, {{ user.user_metadata.name }}!</h1>
+    <h1 class="text-h3">Hi, {{ user.user_metadata.name }}!</h1>
     <div class="col-12">
       <q-table
         title="Beverages"
@@ -95,6 +114,8 @@ export default defineComponent({
         row-key="name"
         :loading="loading"
         :filter="filter"
+        v-model:pagination="noPagination"
+        :hide-pagination="true"
         grid
       >
         <template v-slot:top-right>
@@ -111,9 +132,15 @@ export default defineComponent({
           </q-input>
         </template>
         <template v-slot:item="props">
-          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4" >
-            <q-card flat bordered class="cursor-pointer" v-ripple:primary>
-              <q-card-section class="text-center">
+          <div class="q-pa-xs col-xs-6 col-sm-3 col-md-2">
+            <q-card
+              flat
+              bordered
+              class="cursor-pointer"
+              v-ripple:primary
+              @click="handleShowDetails(props.row)"
+            >
+              <q-card-section class="flex space-around">
                 <strong>{{ props.row.name }}</strong>
               </q-card-section>
               <q-separator />
@@ -133,29 +160,13 @@ export default defineComponent({
                 <q-icon name="fas fa-coins" size="24px" class="" />
                 <div class="col-1">{{ formatCurrency(props.row.price) }}</div>
               </q-card-section>
-              <q-separator />
-              <q-card-section class="flex flex-center q-gutter-x-lg">
-                <q-btn
-                  icon="fas fa-pen"
-                  color="info"
-                  dense
-                  size="sm"
-                  @click="handleEdit(props.row)"
-                >
-                  <q-tooltip> Edit </q-tooltip>
-                </q-btn>
-                <q-btn
-                  icon="fas fa-trash"
-                  color="negative"
-                  dense
-                  size="sm"
-                  @click="handleRemoveBeverage(props.row)"
-                >
-                  <q-tooltip> Delete </q-tooltip>
-                </q-btn>
-              </q-card-section>
             </q-card>
           </div>
+          <dialog-beverage-details
+            :show="showDialogDetails"
+            :beverage="beverageDetails"
+            @hide-dialog="showDialogDetails = false"
+          />
         </template>
 
         <template v-slot:body-cell-actions="props">
