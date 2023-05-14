@@ -27,7 +27,7 @@ export default defineComponent({
     const $q = useQuasar();
 
     const handleClose = () => {
-      emit("hide dialog");
+      emit("hideDialog");
     };
 
     const handleEdit = (beverage) => {

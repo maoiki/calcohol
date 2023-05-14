@@ -162,11 +162,6 @@ export default defineComponent({
               </q-card-section>
             </q-card>
           </div>
-          <dialog-beverage-details
-            :show="showDialogDetails"
-            :beverage="beverageDetails"
-            @hide-dialog="showDialogDetails = false"
-          />
         </template>
 
         <template v-slot:body-cell-actions="props">
@@ -184,4 +179,9 @@ export default defineComponent({
       />
     </q-page-sticky>
   </q-page>
+  <dialog-beverage-details
+            :show="showDialogDetails"
+            :beverage="beverageDetails"
+            @hide-dialog="showDialogDetails = false"
+          />
 </template>
