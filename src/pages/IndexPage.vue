@@ -5,7 +5,6 @@ export default defineComponent({
   name: "IndexPage",
 
   setup() {
-
     const form = ref({
       name: "",
       ml: "",
@@ -14,7 +13,7 @@ export default defineComponent({
     });
 
     return {
-      form
+      form,
     };
   },
 });
@@ -44,13 +43,14 @@ export default defineComponent({
         filled
         v-model.number="form.price"
         label="Price"
+        prefix="R$"
       />
     </div>
     <div class="q-pa-md row items-start q-gutter-md">
       <q-card class="my-card">
         <q-card-section> amount of alcohol: </q-card-section>
         <q-card-section>
-          {{ ((form.ml * form.abv) / 100).toFixed(2) }}ml 
+          {{ ((form.ml * form.abv) / 100).toFixed(2) }}ml
         </q-card-section>
       </q-card>
       <q-card class="my-card">
@@ -63,7 +63,9 @@ export default defineComponent({
       <q-card class="my-card">
         <q-card-section> price per liter of alcohol: </q-card-section>
         <q-card-section>
-          R${{ (1000 / (((form.ml * form.abv) / 100)) * form.price ).toFixed(2)}}
+          R${{
+            ((1000 / ((form.ml * form.abv) / 100)) * form.price).toFixed(2)
+          }}
         </q-card-section>
       </q-card>
     </div>

@@ -5,11 +5,25 @@ import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import { columnsBeverage, noPagination } from "src/pages/table";
+import {
+  formatCurrency,
+  formatPercent,
+  formatUnitMeasure,
+} from "src/utils/format";
+
+import DialogBeverageDetails from "components/DialogBeverageDetails.vue";
 
 export default defineComponent({
   name: "MePage",
+  components: {
+    DialogBeverageDetails,
+  },
+
   setup() {
     const loading = ref(true);
+
+    const filter = ref("");
 
     const { user } = useAuthUser();
 
@@ -23,7 +37,16 @@ export default defineComponent({
 
     const beverages = ref([]);
 
-    const table = "beverages"
+    const table = "beverages";
+
+    const showDialogDetails = ref(false);
+
+    const beverageDetails = ref([]);
+
+    const handleShowDetails = (beverage) => {
+      beverageDetails.value = beverage;
+      showDialogDetails.value = true;
+    };
 
     const handleListBeverages = async () => {
       try {
@@ -60,51 +83,21 @@ export default defineComponent({
       handleListBeverages();
     });
 
-    const columns = [
-      {
-        name: "name",
-        label: "name",
-        align: "left",
-        field: "name",
-        sortable: true,
-      },
-      {
-        name: "abv",
-        label: "abv",
-        align: "left",
-        field: "abv",
-        sortable: true,
-      },
-      {
-        name: "ml",
-        label: "ml",
-        align: "left",
-        field: "ml",
-        sortable: true,
-      },
-      {
-        name: "price",
-        label: "price",
-        align: "left",
-        field: "price",
-        sortable: true,
-      },
-      {
-        name: "actions",
-        align: "right",
-        label: "actions",
-        field: "actions",
-        sortable: true,
-      },
-    ];
-
     return {
       user,
       beverages,
-      columns,
       loading,
+      showDialogDetails,
+      beverageDetails,
+      handleShowDetails,
       handleEdit,
       handleRemoveBeverage,
+      filter,
+      columnsBeverage,
+      formatCurrency,
+      formatPercent,
+      formatUnitMeasure,
+      noPagination
     };
   },
 });
@@ -112,48 +105,83 @@ export default defineComponent({
 
 <template>
   <q-page padding>
-    <h1>Hi, {{ user.user_metadata.name }}!</h1>
+    <h1 class="text-h3">Hi, {{ user.user_metadata.name }}!</h1>
     <div class="col-12">
       <q-table
+        title="Beverages"
         :rows="beverages"
-        :columns="columns"
+        :columns="columnsBeverage"
         row-key="name"
         :loading="loading"
+        :filter="filter"
+        v-model:pagination="noPagination"
+        :hide-pagination="true"
+        grid
       >
-        <template v-slot:top>
-          <span class="text-h6"> Beverages </span>
-          <q-space />
-          <q-btn
-            v-if="$q.platform.is.desktop"
-            label="Add New"
-            color="primary"
-            icon="add"
-            :to="{ name: 'form-beverage' }"
-          />
+        <template v-slot:top-right>
+          <q-input
+            borderless
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="Search"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
         </template>
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-6 col-sm-3 col-md-2">
+            <q-card
+              flat
+              bordered
+              class="cursor-pointer"
+              v-ripple:primary
+              @click="handleShowDetails(props.row)"
+            >
+              <q-card-section class="flex space-around">
+                <strong>{{ props.row.name }}</strong>
+              </q-card-section>
+              <q-separator />
+              <q-card-section class="flex flex-center q-gutter-x-lg">
+                <q-icon
+                  name="fas fa-wine-bottle"
+                  size="24px"
+                  class="flex-start"
+                />
+                <div>{{ formatUnitMeasure(props.row.ml) }}</div>
+              </q-card-section>
+              <q-card-section class="flex flex-center q-gutter-x-lg">
+                <q-icon name="fas fa-percent" size="24px" class="flex-start" />
+                <div>{{ formatPercent(props.row.abv) }}</div>
+              </q-card-section>
+              <q-card-section class="flex flex-center q-gutter-x-lg">
+                <q-icon name="fas fa-coins" size="24px" class="" />
+                <div class="col-1">{{ formatCurrency(props.row.price) }}</div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+
         <template v-slot:body-cell-actions="props">
-          <q-td :props="props" class="q-gutter-x-sm">
-            <q-btn
-              icon="edit"
-              color="info"
-              dense
-              size="sm"
-              @click="handleEdit(props.row)"
-            >
-              <q-tooltip> Edit </q-tooltip>
-            </q-btn>
-            <q-btn
-              icon="delete"
-              color="negative"
-              dense
-              size="sm"
-              @click="handleRemoveBeverage(props.row)"
-            >
-              <q-tooltip> Delete </q-tooltip>
-            </q-btn>
-          </q-td>
+          <q-td :props="props" class="q-gutter-x-sm"> </q-td>
         </template>
       </q-table>
     </div>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        v-if="$q.platform.is.mobile"
+        fab
+        color="primary"
+        icon="add"
+        :to="{ name: 'form-beverage' }"
+      />
+    </q-page-sticky>
   </q-page>
+  <dialog-beverage-details
+            :show="showDialogDetails"
+            :beverage="beverageDetails"
+            @hide-dialog="showDialogDetails = false"
+          />
 </template>

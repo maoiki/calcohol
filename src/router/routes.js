@@ -1,5 +1,16 @@
 const routes = [
   {
+    path: "",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "index",
+        component: () => import("pages/IndexPage.vue"),
+      },
+    ],
+  },
+  {
     path: "/login",
     component: () => import("layouts/LoginLayout.vue"),
     children: [
@@ -27,21 +38,15 @@ const routes = [
     ],
   },
   {
-    path: "/",
+    path: "",
     component: () => import("layouts/MainLayout.vue"),
     children: [
+      { path: "/me", name: "me", component: () => import("pages/Me.vue") },
       {
-        path: "",
-        name: "index",
-        component: () => import("pages/IndexPage.vue"),
-      },
-      { path: "me", name: "me", component: () => import("pages/Me.vue") },
-      {
-        path: "form/:id?",
+        path: "/form/:id?",
         name: "form-beverage",
         component: () => import("pages/FormBeverage.vue"),
       },
-      // { path: '', component: () => import('pages/IndexPage.vue') }
     ],
     meta: {
       requiresAuth: true,
