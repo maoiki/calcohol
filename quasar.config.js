@@ -37,7 +37,7 @@ module.exports = configure(function (/* ctx */) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v5',
-      'fontawesome-v6',
+      "fontawesome-v6",
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -103,7 +103,21 @@ module.exports = configure(function (/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        brand: {
+          primary: "#ffc107",
+          secondary: "#c8cbd0",
+          accent: "#706f7a",
+
+          dark: "#18181b",
+          "dark-page": "#18181b",
+
+          positive: "#00b060",
+          negative: "#e73f5d",
+          info: "#31CCEC",
+          warning: "#F2C037",
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -116,7 +130,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Dialog", "Notify"],
+      plugins: ["Dialog", "Notify", "LocalStorage"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -159,6 +173,11 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       workboxMode: "generateSW", // or 'injectManifest'
+      workboxOptions: {
+        skipWaiting: true,
+        clientsClaim: true,
+      },
+
       injectPwaMetaTags: true,
       swFilename: "sw.js",
       manifestFilename: "manifest.json",
