@@ -1,5 +1,11 @@
 <script>
 import { defineComponent, ref } from "vue";
+import { useQuasar } from "quasar";
+import {
+  formatAmountAlcohol,
+  formatPriceLiterBeverage,
+  formatPriceLiterAlcohol
+} from "src/utils/format";
 
 export default defineComponent({
   name: "IndexPage",
@@ -12,63 +18,100 @@ export default defineComponent({
       price: "",
     });
 
+    const $q = useQuasar();
+
     return {
       form,
+      formatAmountAlcohol,
+      formatPriceLiterBeverage,
+      formatPriceLiterAlcohol
     };
   },
 });
 </script>
 <template>
-  <q-page class="flex flex-center">
-    <div class="q-gutter-x-md row">
+  <q-page padding>
+    <div class="q-gutter-md q-pa-sm">
+      <div class="row flex-center">
+        <p class="text-h5">beverage details</p>
+        <q-space></q-space>
+        <q-btn :to="{ name: 'form-beverage' }" round color="primary" icon="add" />
+      </div>
       <q-input
         clearable
         clear-icon="close"
-        filled
         v-model.number="form.ml"
         label="Amount of ml"
-        type="number"
-        step="false"
-      />
+        inputmode="decimal"/>
+      
       <q-input
         clearable
         clear-icon="close"
-        filled
         v-model.number="form.abv"
         label="ABV"
+        inputmode="decimal"
       />
       <q-input
         clearable
         clear-icon="close"
-        filled
         v-model.number="form.price"
         label="Price"
-        prefix="R$"
+        prefix="$"
+        step="false"
+        inputmode="decimal"
       />
+      
     </div>
-    <div class="q-pa-md row items-start q-gutter-md">
+    <div v-if="$q.platform.is.mobile"  class="q-pa-md no-margin flex-center row items-start q-gutter-md fixed-bottom bg-secondary rounded_container">
+      <q-card class="result_card">
+        <q-card-section horizontal>
+          <q-card-section> {{ $t('amountAlcohol') }}  </q-card-section>
+          <q-space />
+          <q-card-section>
+            {{ formatAmountAlcohol(form.abv, form.ml) }}
+          </q-card-section>
+        </q-card-section>
+      </q-card>
+      <q-card class="result_card">
+        <q-card-section horizontal>
+          <q-card-section> {{ $t('priceBeverage') }} </q-card-section>
+          <q-space />
+          <q-card-section class="flex-center">
+            {{ formatPriceLiterBeverage(form.price, form.ml) }}
+          </q-card-section>
+        </q-card-section>
+      </q-card>
+      <q-card class="result_card">
+        <q-card-section horizontal>
+          <q-card-section> {{ $t('priceAlcohol') }}  </q-card-section>
+          <q-space />
+          <q-card-section>
+            {{ formatPriceLiterAlcohol(form.abv, form.ml) }}
+          </q-card-section>
+        </q-card-section>
+      </q-card>
+    </div>
+    <div v-else class="q-pa-md no-margin row items-start q-gutter-md  bg-secondary ">
       <q-card class="my-card">
-        <q-card-section> amount of alcohol: </q-card-section>
+        <q-card-section> {{ $t('amountAlcohol') }} </q-card-section>
         <q-card-section>
-          {{ ((form.ml * form.abv) / 100).toFixed(2) }}ml
+          {{ formatAmountAlcohol(form.abv, form.ml) }}
         </q-card-section>
       </q-card>
       <q-card class="my-card">
-        <q-card-section> price per liter of beverage: </q-card-section>
+        <q-card-section> {{ $t('priceBeverage') }} </q-card-section>
         <q-separator />
         <q-card-section class="flex-center">
-          R${{ ((1000 / form.ml) * form.price).toFixed(2) }}
+          {{ formatPriceLiterBeverage(form.price, form.ml) }}
         </q-card-section>
       </q-card>
       <q-card class="my-card">
-        <q-card-section> price per liter of alcohol: </q-card-section>
+        <q-card-section> {{ $t('priceAlcohol') }} </q-card-section>
         <q-card-section>
-          R${{
-            ((1000 / ((form.ml * form.abv) / 100)) * form.price).toFixed(2)
-          }}
+          {{ formatPriceLiterAlcohol(form.abv, form.ml) }}
         </q-card-section>
       </q-card>
     </div>
-    <q-btn :to="{ name: 'form-beverage' }" color="primary" icon="add" />
+    
   </q-page>
 </template>
