@@ -1,8 +1,33 @@
 // app global css in SCSS form
 .rounded_container {
-    border-radius: 20px 20px 0px 0px;
+  border-radius: 20px 20px 0px 0px;
 }
 
 .result_card {
   width: 85vw;
+  border-radius: 20px;
+}
+
+.border_desktop {
+  border-radius: 20px;
+}
+
+.centralized {
+  margin: auto;
+}
+
+body.body--dark {
+  .container_bg {
+    background-color: $surface-dark;
+  }
+
+  .result_card {
+    background-color: $dark-page;
+  }
+}
+
+body.body--light {
+  .container_bg {
+    background-color: $surface-light;
+  }
 }
