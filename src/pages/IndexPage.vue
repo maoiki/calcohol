@@ -37,8 +37,11 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding>
-    <div class="q-gutter-md q-pa-sm">
+  <q-page padding class="flex column">
+    <div
+      :class="$q.platform.is.mobile ? '' : 'max_container  q-mx-auto'"
+      class="q-gutter-md q-pa-sm"
+    >
       <div class="row flex-center">
         <h1 class="text-h5">{{ $t("indexTitle") }}</h1>
         <q-space></q-space>
@@ -84,15 +87,14 @@ export default defineComponent({
     <q-btn
       @click="handleResetFields"
       no-caps
-      class="q-mt-md flex centralized"
+      class="q-mt-md q-mx-auto q-mt-sm q-mb-xl"
       flat
       rounded
       color="grey-7"
       icon="fas fa-rotate-left"
       :label="$t('reset')"
     />
-    
-    
+
     <div
       v-if="$q.platform.is.mobile"
       class="q-pa-md no-margin fixed-bottom container_bg rounded_container"
@@ -101,7 +103,7 @@ export default defineComponent({
         {{ $t("results") }}
       </h1>
       <div class="flex-center q-gutter-md row">
-        <q-card flat class="result_card bg-dark-page">
+        <q-card flat class="result_card">
           <q-card-section horizontal>
             <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
             <q-space />
@@ -130,26 +132,30 @@ export default defineComponent({
         </q-card>
       </div>
     </div>
-    <div v-else class="q-pa-md no-margin border_desktop bg-secondary">
-      <h1 class="text-h5 text-left">
+
+    <div
+      v-else
+      class="q-pa-md q-mx-auto max_container border_desktop container_bg"
+    >
+      <h1 class="text-h5 text-left title_results">
         {{ $t("results") }}
       </h1>
       <div class="row q-gutter-md flex-center">
-        <q-card class="border_desktop">
+        <q-card flat class="border_desktop result_card_desktop text-center">
           <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
-          <q-card-section class="text-center">
+          <q-card-section>
             {{ formatAmountAlcohol(form.abv, form.ml) }}
           </q-card-section>
         </q-card>
-        <q-card class="border_desktop">
+        <q-card flat class="border_desktop result_card_desktop text-center">
           <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
-          <q-card-section class="text-center">
+          <q-card-section>
             {{ formatPriceLiterBeverage(form.price, form.ml) }}
           </q-card-section>
         </q-card>
-        <q-card class="border_desktop">
+        <q-card flat class="border_desktop result_card_desktop text-center">
           <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
-          <q-card-section class="text-center">
+          <q-card-section>
             {{ formatPriceLiterAlcohol(form.abv, form.ml) }}
           </q-card-section>
         </q-card>

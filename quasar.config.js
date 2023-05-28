@@ -110,7 +110,7 @@ module.exports = configure(function (/* ctx */) {
           accent: "#706f7a",
 
           dark: "#18181b",
-          "dark-page": "#18181b",
+          "dark-page": "#27272a",
 
           positive: "#00b060",
           negative: "#e73f5d",
