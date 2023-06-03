@@ -1,16 +1,26 @@
 <script>
 import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+
 import {
   formatAmountAlcohol,
   formatPriceLiterBeverage,
   formatPriceLiterAlcohol,
 } from "src/utils/format";
 
+import useAuthUser from "src/composables/UseAuthUser";
+
 export default defineComponent({
   name: "IndexPage",
 
   setup() {
+    const { t } = useI18n();
+    const $q = useQuasar();
+    const router = useRouter();
+    const { user } = useAuthUser();
+
     const form = ref({
       name: "",
       ml: "",
@@ -24,7 +34,23 @@ export default defineComponent({
       form.value.price = "";
     };
 
-    const $q = useQuasar();
+    const handleRedirectLogin = () => {
+      if (!!user.value) {
+        router.replace({ name: "form-beverage" });
+      } else {
+        $q.dialog({
+          title: t("redirectLoginTitle"),
+          message: t("redirectLoginMessage"),
+          ok: {
+            label: t("login"),
+          },
+          cancel: true,
+          persistent: false,
+        }).onOk(() => {
+          router.replace({ name: "login" });
+        });
+      }
+    };
 
     return {
       form,
@@ -32,6 +58,7 @@ export default defineComponent({
       formatPriceLiterBeverage,
       formatPriceLiterAlcohol,
       handleResetFields,
+      handleRedirectLogin,
     };
   },
 });
@@ -45,12 +72,7 @@ export default defineComponent({
       <div class="row flex-center">
         <h1 class="text-h5">{{ $t("indexTitle") }}</h1>
         <q-space></q-space>
-        <q-btn
-          :to="{ name: 'form-beverage' }"
-          round
-          color="primary"
-          icon="add"
-        />
+        <q-btn @click="handleRedirectLogin" round color="primary" icon="add" />
       </div>
       <q-input
         standout="bg-primary text-white"
