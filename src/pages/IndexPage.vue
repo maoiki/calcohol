@@ -19,7 +19,7 @@ export default defineComponent({
     const { t } = useI18n();
     const $q = useQuasar();
     const router = useRouter();
-    const { user } = useAuthUser();
+    const {isLoggedIn } = useAuthUser();
 
     const form = ref({
       name: "",
@@ -35,7 +35,7 @@ export default defineComponent({
     };
 
     const handleRedirectLogin = () => {
-      if (!!user.value) {
+      if (isLoggedIn()) {
         router.replace({ name: "form-beverage" });
       } else {
         $q.dialog({
