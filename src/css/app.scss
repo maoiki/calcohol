@@ -1,1 +1,56 @@
 // app global css in SCSS form
+.max_container {
+  width: min(70%, 700px);
+}
+
+.rounded_container {
+  border-radius: 20px 20px 0px 0px;
+}
+
+.result_card {
+  width: 85vw;
+  border-radius: 20px;
+}
+
+.result_card_desktop {
+  margin-bottom: 32px;
+  min-width: 200px;
+}
+
+.border_desktop {
+  border-radius: 20px;
+}
+
+.centralized {
+  margin: auto;
+}
+
+body.body--dark {
+  .container_bg {
+    background-color: $surface-dark;
+  }
+
+  .result_card,
+  .result_card_desktop {
+    background-color: $dark-page;
+  }
+}
+
+body.body--light {
+  .container_bg {
+    background-color: $surface-light;
+  }
+}
+
+@media (min-width: 600px) {
+  .title_results {
+    margin-left: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .result_card_desktop {
+    margin-bottom: 8px;
+    min-width: 200px;
+  }
+}
