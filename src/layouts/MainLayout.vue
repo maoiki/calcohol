@@ -40,7 +40,7 @@ export default defineComponent({
 
     const $q = useQuasar();
 
-    const { logout } = useAuthUser();
+    const { logout, isLoggedIn } = useAuthUser();
 
     const miniState = ref(true);
 
@@ -64,6 +64,7 @@ export default defineComponent({
       },
       handleLogout,
       miniState,
+      isLoggedIn
     };
   },
 });
@@ -86,7 +87,7 @@ export default defineComponent({
 
         <dark-mode-toggle />
 
-        <q-btn-dropdown flat icon="person">
+        <q-btn-dropdown v-if="isLoggedIn()" flat icon="person">
           <q-list>
             <q-item
               clickable
