@@ -16,6 +16,8 @@ export default defineComponent({
 
     const password = ref("");
 
+    const isPassword = ref(true);
+
     const handlePasswordReset = async () => {
       try {
         await resetPassword(password.value);
@@ -29,6 +31,7 @@ export default defineComponent({
     return {
       password,
       handlePasswordReset,
+      isPassword,
     };
   },
 });
@@ -36,21 +39,31 @@ export default defineComponent({
 <template>
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handlePasswordReset">
-      <h1 class="col-12 text-center">Password reset</h1>
+      <h1 class="col-12 text-center">{{ $t('passwordReset') }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
-          label="New password"
-          v-model="password"
+          :label="$t('newPassword')"
+          v-model="form.password"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Password is required',
-          (val) => (val && val.length >= 6) || 'Password must contain at least 6 characters',
-        ]"
-          hint="Password must contain at least 6 characters"
-        />
+          :rules="[
+            (val) => (val && val.length > 0) || $t('passwordRequired'),
+            (val) => (val && val.length >= 6) || $t('passwordMinimum'),
+          ]"
+          :type="isPassword ? 'password' : 'text'"
+          :hint="$t('passwordMinimum')"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPassword ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPassword = !isPassword"
+            />
+          </template>
+        </q-input>
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
-            label="Confirm new password"
+            :label="$t('confirmNewPassword')"
             color="primary"
             class="full-width"
             type="submit"
@@ -58,7 +71,7 @@ export default defineComponent({
             outline
           />
           <q-btn
-            label="Go back"
+            :label="$t('goBack')"
             color="primary"
             class="full-width"
             :to="{ name: 'me' }"
