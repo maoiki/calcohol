@@ -18,6 +18,8 @@ export default defineComponent({
       password: "",
     });
 
+    const isPassword = ref(true);
+
     onMounted(() => {
       if (isLoggedIn) {
         router.push({ name: "me" });
@@ -37,6 +39,7 @@ export default defineComponent({
     return {
       form,
       handleLogin,
+      isPassword,
     };
   },
 });
@@ -45,29 +48,36 @@ export default defineComponent({
 <template>
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handleLogin">
-      <h1 class="col-12 text-center">Login</h1>
+      <h1 class="col-12 text-center">{{ $t("login") }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+          :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
           type="email"
         />
         <q-input
-          label="Password"
+          :label="$t('password')"
           v-model="form.password"
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || 'Password is required',
-            (val) =>
-              (val && val.length >= 6) ||
-              'Password must contain at least 6 characters',
+            (val) => (val && val.length > 0) || $t('passwordRequired'),
+            (val) => (val && val.length >= 6) || $t('passwordMinimum'),
           ]"
-        />
+          :type="isPassword ? 'password' : 'text'"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPassword ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPassword = !isPassword"
+            />
+          </template>
+        </q-input>
         <div class="full-width q-pt-md">
           <q-btn
-            label="Login"
+            :label="$t('login')"
             color="primary"
             class="full-width"
             type="submit"
@@ -77,7 +87,7 @@ export default defineComponent({
         </div>
         <div class="full-width q-gutter-y-md">
           <q-btn
-            label="Register"
+            :label="$t('register')"
             color="primary"
             class="full-width"
             :to="{ name: 'register' }"
@@ -85,7 +95,7 @@ export default defineComponent({
             flat
           />
           <q-btn
-            label="Forgot your password?"
+            :label="$t('forgotPassword')"
             color="primary"
             class="full-width"
             size="sm"

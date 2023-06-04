@@ -10,9 +10,11 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const { register, isLoggedIn } = useAuthUser();
+    const { register } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
+
+    const isPassword = ref(true);
 
     const form = ref({
       email: "",
@@ -36,6 +38,7 @@ export default defineComponent({
     return {
       form,
       handleRegister,
+      isPassword,
     };
   },
 });
@@ -44,33 +47,45 @@ export default defineComponent({
 <template>
   <q-page padding>
     <q-form class="row justify-center" @submit.prevent="handleRegister">
-      <h1 class="col-12 text-center">Register</h1>
+      <h1 class="col-12 text-center">{{ $t('register') }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10">
         <q-input
-          label="Name"
+          :label="$t('Name')"
           v-model="form.name"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+          :rules="[(val) => (val && val.length > 0) || $t('nameRequired') ]"
         />
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+          :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
           type="email"
         />
+
         <q-input
-          label="Password"
+          :label="$t('password')"
           v-model="form.password"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Password is required',
-          (val) => (val && val.length >= 6) || 'Password must contain at least 6 characters',
-        ]"
-          hint="Password must contain at least 6 characters"
-        />
+          :rules="[
+            (val) => (val && val.length > 0) || $t('passwordRequired'),
+            (val) => (val && val.length >= 6) || $t('passwordMinimum'),
+          ]"
+          :type="isPassword ? 'password' : 'text'"
+          :hint="$t('passwordMinimum')"
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPassword ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPassword = !isPassword"
+            />
+          </template>
+        </q-input>
+
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
-            label="Register"
+            :label="$t('register')"
             color="primary"
             class="full-width"
             type="submit"
@@ -78,7 +93,7 @@ export default defineComponent({
             outline
           />
           <q-btn
-            label="Go back"
+            :label="$t('goBack')"
             color="primary"
             class="full-width"
             :to="{ name: 'login' }"
