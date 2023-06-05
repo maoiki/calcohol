@@ -1,7 +1,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-import DarkModeToggle from 'components/darkModeToggle.vue'
+import DarkModeToggle from 'components/DarkModeToggle.vue'
 import useAuthUser from 'src/composables/UseAuthUser'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'

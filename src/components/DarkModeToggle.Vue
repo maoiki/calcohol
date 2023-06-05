@@ -3,7 +3,7 @@ import { defineComponent, onMounted, ref, watch } from "vue";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
-
+  name: "DarkModeToggle",
   setup() {
     const darkMode = ref(false);
 
@@ -12,7 +12,6 @@ export default defineComponent({
     watch(darkMode, (darkMode) => {
       $q.dark.set(darkMode);
       $q.localStorage.set("darkMode", darkMode);
-      // const value = $q.localStorage.getItem(key)
     });
 
     onMounted(() => {
