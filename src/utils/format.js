@@ -10,7 +10,7 @@ const formatCurrency = (currency) => {
 const formatUnitMeasure = (unit) => {
   let formatted = unit;
   if (unit > 1000) {
-    let unitTreated = (unit / 1000)
+    let unitTreated = unit / 1000;
     formatted = parseFloat(unitTreated.toFixed(2)) + " L";
   } else {
     formatted = parseFloat(unit.toFixed(2)) + " ml";
@@ -50,13 +50,18 @@ const formatPriceLiterBeverage = (price, ml) => {
   }
 };
 
-const formatPriceLiterAlcohol = (abv, ml) => {
-  if (abv && ml) {
-    const mlFormatted = 1000 / ml;
+const formatPriceLiterAlcohol = (abv, ml, price) => {
+  if (abv && ml && price) {
     const abvFormatted = abv / 100;
-    const priceLiter = mlFormatted * abvFormatted;
+    const mlFormatted = ml / 1000;
 
+    const amount = mlFormatted * abvFormatted;
+    const amountFormatted = parseFloat(amount.toFixed(2));
+
+    const priceLiter = price / amountFormatted;
+ 
     const formatted = formatCurrency(priceLiter);
+
     return formatted;
   } else {
     return "-";

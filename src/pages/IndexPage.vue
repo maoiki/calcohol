@@ -148,7 +148,7 @@ export default defineComponent({
             <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
             <q-space />
             <q-card-section>
-              {{ formatPriceLiterAlcohol(form.abv, form.ml) }}
+              {{ formatPriceLiterAlcohol(form.abv, form.ml, form.price) }}
             </q-card-section>
           </q-card-section>
         </q-card>
@@ -178,7 +178,7 @@ export default defineComponent({
         <q-card flat class="border_desktop result_card_desktop text-center">
           <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
           <q-card-section>
-            {{ formatPriceLiterAlcohol(form.abv, form.ml) }}
+            {{ formatPriceLiterAlcohol(form.abv, form.ml, form.price) }}
           </q-card-section>
         </q-card>
       </div>
