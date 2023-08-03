@@ -101,11 +101,9 @@ export default defineComponent({
         <div class="full-width q-pt-md">
           <q-btn
             :label="$t('login')"
-            color="primary"
             class="full-width"
             type="submit"
-            rounded
-            outline
+            v-bind="{...$visualRoundButton}"
           />
         </div>
         <div class="full-width q-gutter-y-md">
