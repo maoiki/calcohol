@@ -12,21 +12,29 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
-$typography-font-family : 'Inter', sans-serif !default;
+$typography-font-family: "Inter", sans-serif !default;
 
-$primary   : #ffc107;
-$secondary : #26A69A;
-$accent    : #9C27B0;
+$primary: #DD8900;
+$secondary: #c8cbd0;
+$accent: #706f7a;
 
-$dark      : #18181b;
-$dark-page : #27272a;
+$dark: #18181b;
+$dark-page: #27272a;
 
-$positive  : #00b060;
-$negative  : #e73f5d;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$positive: #00b060;
+$negative: #e73f5d;
+$info: #31ccec;
+$warning: #f2c037;
 
-$surface-dark : #363639;
-$surface-light : #f2f2f2;
+$surface-dark: #363639;
+$surface-light: #f2f2f2;
+
+$c-white: #F9F9F9;
+$c-gray: #D1D1D1;
+$c-black: #2B2B2B;
+$c-yellow-1: #F5D9AC;
+$c-yellow-2: #E9B156;
+$c-yellow-3: #6F4500;
+

@@ -57,6 +57,7 @@ export default defineComponent({
 
 <template>
   <q-page padding>
+    <h1 class="col-12 text-center welcome">{{ $t("welcomeBack") }}</h1>
     <q-btn
             :label="$t('signInGoogle')"
             color="#2B2B2B"
@@ -65,11 +66,10 @@ export default defineComponent({
             outline
             icon="fa-brands fa-google"
             align="between"
-            class="q-py-sm"
-
+            class="q-py-sm justify-center"
           />
+        <p class="or">{{ $t("or") }}</p>
     <q-form class="row justify-center" @submit.prevent="handleLogin">
-      <h1 class="col-12 text-center">{{ $t("login") }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
           label="Email"

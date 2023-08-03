@@ -28,7 +28,8 @@ export default {
   forgotPassword: "Forgot your password?",
   confirmNewPassword: "Confirm your new password",
   goBack: "Go back",
-
+  welcomeBack: "Welcome back!",
+  or:"OR",
 
   signInGoogle: "Sign in with Google",
 
