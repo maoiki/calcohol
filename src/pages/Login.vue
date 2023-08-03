@@ -106,23 +106,18 @@ export default defineComponent({
             v-bind="{...$visualRoundButton}"
           />
         </div>
-        <div class="full-width q-gutter-y-md">
-          <q-btn
-            :label="$t('register')"
-            color="primary"
-            class="full-width"
-            :to="{ name: 'register' }"
-            rounded
-            flat
-          />
+        <div class="full-width ">
           <q-btn
             :label="$t('forgotPassword')"
-            color="primary"
             class="full-width"
-            size="sm"
             :to="{ name: 'forgot-password' }"
-            rounded
-            flat
+            v-bind="{...$visualTextButton}"
+          />
+          <q-btn
+            :label="$t('register')"
+            class="full-width"
+            :to="{ name: 'register' }"
+            v-bind="{...$visualTextButton}"
           />
         </div>
       </div>

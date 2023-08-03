@@ -12,4 +12,13 @@ const roundButton = {
   padding: "sm",
 };
 
-export { input, roundButton };
+const textButton = {
+  color: "dark",
+  flat:true,
+  "no-caps": true,
+  unelevated: true,
+  rounded: true,
+  dense: true,
+};
+
+export { input, roundButton, textButton };

@@ -21,7 +21,7 @@ export default {
 
   login: "Login",
   name: "Name",
-  register: "Register",
+  register: "Don't have an account? Sign up",
   password: "Password",
   passwordReset: "Password reset",
   newPassword: "New password",
@@ -29,7 +29,7 @@ export default {
   confirmNewPassword: "Confirm your new password",
   goBack: "Go back",
   welcomeBack: "Welcome back!",
-  or:"OR",
+  or: "OR",
 
   signInGoogle: "Sign in with Google",
 
