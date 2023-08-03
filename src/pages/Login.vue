@@ -77,10 +77,12 @@ export default defineComponent({
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
           type="email"
+          v-bind="{...$visualInput}"
         />
         <q-input
           :label="$t('password')"
           v-model="form.password"
+          v-bind="{...$visualInput}"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('passwordRequired'),
