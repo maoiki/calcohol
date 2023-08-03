@@ -29,6 +29,9 @@ export default {
   confirmNewPassword: "Confirm your new password",
   goBack: "Go back",
 
+
+  signInGoogle: "Sign in with Google",
+
   nameRequired: "Name is required",
   emailRequired: "Email is required",
   passwordRequired: "Password is required",

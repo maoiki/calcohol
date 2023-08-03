@@ -9,7 +9,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const { login, isLoggedIn } = useAuthUser();
+    const { login, isLoggedIn, loginWithSocialProvider } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
 
@@ -36,9 +36,19 @@ export default defineComponent({
       }
     };
 
+    const handleLoginGoogle = async () => {
+      try {
+        await loginWithSocialProvider('google')
+        notifySuccess();
+      } catch (error) {
+        notifyError(error.message);
+      }
+    }
+
     return {
       form,
       handleLogin,
+      handleLoginGoogle,
       isPassword,
     };
   },
@@ -47,6 +57,17 @@ export default defineComponent({
 
 <template>
   <q-page padding>
+    <q-btn
+            :label="$t('signInGoogle')"
+            color="#2B2B2B"
+            @click="handleLoginGoogle"
+            no-caps
+            outline
+            icon="fa-brands fa-google"
+            align="between"
+            class="q-py-sm"
+
+          />
     <q-form class="row justify-center" @submit.prevent="handleLogin">
       <h1 class="col-12 text-center">{{ $t("login") }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
