@@ -1,11 +1,11 @@
 const input = {
   "label-color": "dark",
-  "bg-color": "inputs",
+  class: "inputs",
   borderless: true,
 };
 
 const roundButton = {
-  color: "round-button",
+  class: "round-button",
   "text-color": "dark",
   "no-caps": true,
   unelevated: true,
