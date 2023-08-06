@@ -45,15 +45,31 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding>
-    <q-form class="row justify-center" @submit.prevent="handleRegister">
-      <h1 class="col-12 text-center">{{ $t('register') }}</h1>
-      <div class="col-md-4 col-sm-6 col-xs-10">
+  <q-page padding class="login-content">
+    <h1 class="welcome">{{ $t("welcome") }}</h1>
+    <q-btn
+      class="google-button"
+      @click="handleLoginGoogle"
+      no-caps
+      unelevated
+      align="between"
+    >        
+      <q-icon name="fa-brands fa-google" />
+
+      {{ $t("signUpGoogle") }}
+
+      <q-icon name="fa-brands fa-google" class="invisible" />
+    </q-btn>
+
+    <p class="separator">{{ $t("or") }}</p>
+    <q-form class="" @submit.prevent="handleRegister">
+      <div class="q-gutter-y-lg">
         <q-input
           :label="$t('Name')"
           v-model="form.name"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('nameRequired') ]"
+          v-bind="{ ...$visualInput }"
         />
         <q-input
           label="Email"
@@ -61,6 +77,7 @@ export default defineComponent({
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
           type="email"
+          v-bind="{ ...$visualInput }"
         />
 
         <q-input
@@ -73,6 +90,7 @@ export default defineComponent({
           ]"
           :type="isPassword ? 'password' : 'text'"
           :hint="$t('passwordMinimum')"
+          v-bind="{ ...$visualInput }"
         >
           <template v-slot:append>
             <q-icon
@@ -83,22 +101,18 @@ export default defineComponent({
           </template>
         </q-input>
 
-        <div class="full-width q-pt-md q-gutter-y-sm">
+        <div class="q-pt-md q-gutter-y-sm">
           <q-btn
             :label="$t('register')"
-            color="primary"
             class="full-width"
             type="submit"
-            rounded
-            outline
+            v-bind="{ ...$visualRoundButton }"
           />
           <q-btn
-            :label="$t('goBack')"
-            color="primary"
+            :label="$t('accountAlready')"
             class="full-width"
             :to="{ name: 'login' }"
-            rounded
-            flat
+            v-bind="{ ...$visualTextButton }"
           />
         </div>
       </div>

@@ -28,11 +28,13 @@ export default {
   newPassword: "New password",
   forgotPassword: "Forgot your password?",
   confirmNewPassword: "Confirm your new password",
-  goBack: "Go back",
+  accountAlready: "Already have an account?",
+  welcome: "Welcome!",
   welcomeBack: "Welcome back!",
   or: "OR",
 
   signInGoogle: "Sign in with Google",
+  signUpGoogle: "Sign up with Google",
 
   nameRequired: "Name is required",
   emailRequired: "Email is required",

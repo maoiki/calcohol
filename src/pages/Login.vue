@@ -75,7 +75,7 @@ export default defineComponent({
 
     <p class="separator">{{ $t("or") }}</p>
     <q-form @submit.prevent="handleLogin">
-      <div class=" q-gutter-y-md">
+      <div class="q-gutter-y-lg">
         <q-input
           label="Email"
           v-model="form.email"
