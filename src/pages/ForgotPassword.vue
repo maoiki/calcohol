@@ -30,34 +30,31 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding>
-    <q-form class="row justify-center" @submit.prevent="handleForgotPassword">
-      <h1 class="col-12 text-center">Password recovery</h1>
-      <div class="col-md-4 col-sm-6 col-xs-10 ">
+  <q-page padding class="login-content">
+    <h1 class="welcome">{{ $t("forgotPassword") }}</h1>
+    <q-form  @submit.prevent="handleForgotPassword">
+      <div clas>
         <q-input
           label="Email"
           v-model="email"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || 'Email is required']"
           type="email"
+          class="mb-40"
+          v-bind="{ ...$visualInput }"
         />
 
         <div class="full-width q-pt-md q-gutter-y-sm">
           <q-btn
-            label="Send recovery email"
-            color="primary"
-            class="full-width"
+            :label="$t('continue')"
             type="submit"
-            rounded
-            outline
+            v-bind="{ ...$visualRoundButton }"
           />
           <q-btn
-            label="Go back"
-            color="primary"
-            class="full-width"
+            v-if="$q.platform.is.desktop"
+            :label="$t('goBack')"
             :to="{ name: 'login' }"
-            rounded
-            flat
+            v-bind="{ ...$visualTextButton }"
           />
         </div>
       </div>

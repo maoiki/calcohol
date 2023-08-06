@@ -29,6 +29,8 @@ export default {
   forgotPassword: "Forgot your password?",
   confirmNewPassword: "Confirm your new password",
   accountAlready: "Already have an account?",
+  continue: "Continue",
+  goBack: "Go back",
   welcome: "Welcome!",
   welcomeBack: "Welcome back!",
   or: "OR",
