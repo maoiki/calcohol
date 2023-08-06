@@ -21,7 +21,8 @@ export default {
 
   login: "Login",
   name: "Name",
-  register: "Don't have an account? Sign up",
+  register: "Register",
+  signUpButton: "Don't have an account? Sign up",
   password: "Password",
   passwordReset: "Password reset",
   newPassword: "New password",

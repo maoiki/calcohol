@@ -58,3 +58,13 @@ body.body--light {
     min-width: 200px;
   }
 }
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  align-items: stretch;
+  text-align: center;
+  margin: auto;
+}
