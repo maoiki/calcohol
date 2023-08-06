@@ -5,7 +5,7 @@ const input = {
 };
 
 const roundButton = {
-  class: "round-button",
+  class: "round-button full-width",
   "text-color": "dark",
   "no-caps": true,
   unelevated: true,
@@ -14,11 +14,12 @@ const roundButton = {
 
 const textButton = {
   color: "dark",
-  flat:true,
+  flat: true,
   "no-caps": true,
   unelevated: true,
   rounded: true,
   dense: true,
+  class: "full-width",
 };
 
 export { input, roundButton, textButton };

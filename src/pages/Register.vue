@@ -104,13 +104,11 @@ export default defineComponent({
         <div class="q-pt-md q-gutter-y-sm">
           <q-btn
             :label="$t('register')"
-            class="full-width"
             type="submit"
             v-bind="{ ...$visualRoundButton }"
           />
           <q-btn
             :label="$t('accountAlready')"
-            class="full-width"
             :to="{ name: 'login' }"
             v-bind="{ ...$visualTextButton }"
           />

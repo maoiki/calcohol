@@ -106,7 +106,6 @@ export default defineComponent({
         <div class="q-pt-md">
           <q-btn
             :label="$t('login')"
-            class="full-width"
             type="submit"
             v-bind="{ ...$visualRoundButton }"
           />
@@ -114,13 +113,11 @@ export default defineComponent({
         <div>
           <q-btn
             :label="$t('forgotPassword')"
-            class="full-width"
             :to="{ name: 'forgot-password' }"
             v-bind="{ ...$visualTextButton }"
           />
           <q-btn
             :label="$t('signUpButton')"
-            class="full-width"
             :to="{ name: 'register' }"
             v-bind="{ ...$visualTextButton }"
           />
