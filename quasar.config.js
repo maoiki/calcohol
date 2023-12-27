@@ -105,7 +105,7 @@ module.exports = configure(function (/* ctx */) {
     framework: {
       config: {
         brand: {
-          primary: "#ffc107",
+          primary: "#DD8900",
           secondary: "#c8cbd0",
           accent: "#706f7a",
 

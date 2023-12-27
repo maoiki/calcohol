@@ -21,6 +21,7 @@ export default {
     "Para adicionar uma nova bebida, você deve estar logado",
 
   login: "Entrar",
+  cancel: "Cancelar",
   name: "Nome",
   register: "Cadastre-se",
   signUpButton: "Não possui uma conta? Cadastre-se",

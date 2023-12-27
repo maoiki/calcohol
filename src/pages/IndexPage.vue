@@ -19,7 +19,7 @@ export default defineComponent({
     const { t } = useI18n();
     const $q = useQuasar();
     const router = useRouter();
-    const {isLoggedIn } = useAuthUser();
+    const { isLoggedIn } = useAuthUser();
 
     const form = ref({
       name: "",
@@ -43,8 +43,14 @@ export default defineComponent({
           message: t("redirectLoginMessage"),
           ok: {
             label: t("login"),
+            color: "primary",
+            class:"primary-button"
           },
-          cancel: true,
+          cancel: {
+            label: t("cancel"),
+            flat: true,
+            color: "primary"
+          },
           persistent: false,
         }).onOk(() => {
           router.replace({ name: "login" });
@@ -72,7 +78,12 @@ export default defineComponent({
       <div class="row flex-center">
         <h1 class="text-h5">{{ $t("indexTitle") }}</h1>
         <q-space></q-space>
-        <q-btn @click="handleRedirectLogin" round color="primary" icon="add" />
+        <q-btn
+          @click="handleRedirectLogin"
+          round
+          icon="bookmark"
+          class="primary-button"
+        />
       </div>
       <q-input
         standout="bg-primary text-white"

@@ -20,6 +20,7 @@ export default {
   redirectLoginMessage: "To add a new beverage, you must be logged in",
 
   login: "Login",
+  cancel: "Cancel",
   name: "Name",
   register: "Register",
   signUpButton: "Don't have an account? Sign up",
