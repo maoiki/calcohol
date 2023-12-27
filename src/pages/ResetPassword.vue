@@ -22,7 +22,7 @@ export default defineComponent({
       try {
         await resetPassword(password.value);
         notifySuccess();
-        router.push({ name: "me" });  
+        router.push({ name: "me" });
       } catch (error) {
         notifyError(error.message);
       }
@@ -37,9 +37,9 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding>
+  <q-page padding class="inputs-content">
+    <h1 class="col-12 text-center">{{ $t("passwordReset") }}</h1>
     <q-form class="row justify-center" @submit.prevent="handlePasswordReset">
-      <h1 class="col-12 text-center">{{ $t('passwordReset') }}</h1>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
           :label="$t('newPassword')"
@@ -71,12 +71,10 @@ export default defineComponent({
             outline
           />
           <q-btn
+            v-if="$q.platform.is.desktop"
             :label="$t('goBack')"
-            color="primary"
-            class="full-width"
             :to="{ name: 'me' }"
-            rounded
-            flat
+            v-bind="{ ...$visualTextButton }"
           />
         </div>
       </div>
