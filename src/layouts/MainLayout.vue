@@ -1,101 +1,77 @@
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-import DarkModeToggle from 'components/DarkModeToggle.vue'
-import useAuthUser from 'src/composables/UseAuthUser'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-
+import { defineComponent, ref } from "vue";
+import EssentialLink from "components/EssentialLink.vue";
+import DarkModeToggle from "components/darkModeToggle.vue";
+import useAuthUser from "src/composables/UseAuthUser";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: "Home",
+    icon: "fas fa-home",
+    routeName: "index",
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: "Add drink",
+    icon: "fas fa-plus",
+    routeName: "form-beverage",
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: "Saved drinks",
+    icon: "fas fa-heart",
+    routeName: "me",
   },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+
+];
 
 export default defineComponent({
-  name: 'MainLayout',
+  name: "MainLayout",
 
   components: {
     EssentialLink,
-    DarkModeToggle
+    DarkModeToggle,
   },
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+  setup() {
+    const leftDrawerOpen = ref(false);
 
-    const router = useRouter()
+    const router = useRouter();
 
-    const $q = useQuasar()
+    const $q = useQuasar();
 
-    const {logout} = useAuthUser()
+    const { logout, isLoggedIn } = useAuthUser();
 
-    const handleLogout = async() => {
+    const miniState = ref(true);
+
+    const handleLogout = async () => {
       $q.dialog({
-        title: 'Logout',
-        message: 'Do you really want to leave?',
+        title: "Logout",
+        message: "Do you really want to leave?",
         cancel: true,
-        persistent: false
-      }).onOk(async() => {
-        await logout()
-        router.replace({name: 'login'})
-      })
-    }
-
+        persistent: false,
+      }).onOk(async () => {
+        await logout();
+        router.replace({ name: "login" });
+      });
+    };
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       handleLogout,
-    }
-  }
+      miniState,
+      isLoggedIn
+    };
+  },
 });
 </script>
 
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lff">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -107,37 +83,39 @@ export default defineComponent({
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          Calcohol
-        </q-toolbar-title>
+        <q-toolbar-title> Calcohol </q-toolbar-title>
 
         <dark-mode-toggle />
 
-        <q-btn-dropdown flat icon="person">
-      <q-list>
-        <q-item clickable v-close-popup @click="handleLogout" >
-          <q-item-section>
-            <q-item-label>Logout</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-btn-dropdown>
-      
+        <q-btn-dropdown v-if="isLoggedIn()" flat icon="person">
+          <q-list>
+            <q-item
+              clickable
+              v-close-popup
+              @click="handleLogout"
+            >
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
+              </q-item-section>
+            </q-item>
+          
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
+      mini-to-overlay
+      :width="200"
+      :breakpoint="500"
       bordered
     >
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -151,4 +129,3 @@ export default defineComponent({
     </q-page-container>
   </q-layout>
 </template>
-
