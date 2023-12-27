@@ -1,5 +1,4 @@
 const input = {
-  "label-color": "dark",
   class: "inputs",
   borderless: true,
 };
@@ -13,7 +12,6 @@ const roundButton = {
 };
 
 const textButton = {
-  color: "dark",
   flat: true,
   "no-caps": true,
   unelevated: true,

@@ -20,7 +20,7 @@ export default {
   redirectLoginMessage:
     "Para adicionar uma nova bebida, você deve estar logado",
 
-  login: "Login",
+  login: "Entrar",
   name: "Nome",
   register: "Cadastre-se",
   signUpButton: "Não possui uma conta? Cadastre-se",

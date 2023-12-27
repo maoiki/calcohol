@@ -6,6 +6,9 @@
   line-height: normal;
   margin-bottom: 50px;
 }
+body.body--dark .welcome {
+  color: $c-white;
+}
 
 .separator {
   font-size: 14px;
@@ -30,4 +33,7 @@
     background: $c-gray-2;
     margin-left: 16px;
   }
+}
+body.body--dark .separator {
+  color: $c-white;
 }
