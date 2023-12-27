@@ -1,7 +1,8 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import DarkModeToggle from "components/darkModeToggle.vue";
+import DarkModeToggle from "components/DarkModeToggle.vue";
+import LanguageToggle from "src/components/LanguageToggle.vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
@@ -22,7 +23,6 @@ const linksList = [
     icon: "fas fa-heart",
     routeName: "me",
   },
-
 ];
 
 export default defineComponent({
@@ -31,6 +31,7 @@ export default defineComponent({
   components: {
     EssentialLink,
     DarkModeToggle,
+    LanguageToggle,
   },
 
   setup() {
@@ -64,7 +65,7 @@ export default defineComponent({
       },
       handleLogout,
       miniState,
-      isLoggedIn
+      isLoggedIn,
     };
   },
 });
@@ -86,19 +87,15 @@ export default defineComponent({
         <q-toolbar-title> Calcohol </q-toolbar-title>
 
         <dark-mode-toggle />
+        <language-toggle />
 
         <q-btn-dropdown v-if="isLoggedIn()" flat icon="person">
           <q-list>
-            <q-item
-              clickable
-              v-close-popup
-              @click="handleLogout"
-            >
+            <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section>
                 <q-item-label>Logout</q-item-label>
               </q-item-section>
             </q-item>
-          
           </q-list>
         </q-btn-dropdown>
       </q-toolbar>
