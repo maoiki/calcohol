@@ -29,8 +29,7 @@ const formatAmountAlcohol = (abv, ml) => {
   if (abv && ml) {
     const abvFormatted = abv / 100;
     const amount = ml * abvFormatted;
-    const amountFormatted = parseFloat(amount.toFixed(2));
-    const formatted = formatUnitMeasure(amountFormatted);
+    const formatted = formatUnitMeasure(amount);
 
     return formatted;
   } else {
@@ -56,10 +55,9 @@ const formatPriceLiterAlcohol = (abv, ml, price) => {
     const mlFormatted = ml / 1000;
 
     const amount = mlFormatted * abvFormatted;
-    const amountFormatted = parseFloat(amount.toFixed(2));
 
-    const priceLiter = price / amountFormatted;
- 
+    const priceLiter = price / amount;
+
     const formatted = formatCurrency(priceLiter);
 
     return formatted;
