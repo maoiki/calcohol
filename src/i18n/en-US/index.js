@@ -20,6 +20,9 @@ export default {
   redirectLoginMessage: "To add a new beverage, you must be logged in",
 
   login: "Login",
+  logout: "Logout",
+  logoutMessage: "Do you really want to leave?",
+  ok: "ok",
   cancel: "Cancel",
   name: "Name",
   register: "Register",
@@ -43,4 +46,8 @@ export default {
   emailRequired: "Email is required",
   passwordRequired: "Password is required",
   passwordMinimum: "Password must contain at least 6 characters",
+
+  home: "Home",
+  addDrink: "Add drink",
+  profile:"Profile"
 };

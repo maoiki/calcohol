@@ -6,22 +6,39 @@ import LanguageToggle from "src/components/LanguageToggle.vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
-const linksList = [
+const menuTop = [
   {
-    title: "Home",
+    title: "home",
     icon: "fas fa-home",
     routeName: "index",
+    alwaysShow: true,
   },
   {
-    title: "Add drink",
+    title: "addDrink",
     icon: "fas fa-plus",
     routeName: "form-beverage",
+    requireLogin: true,
   },
   {
-    title: "Saved drinks",
+    title: "profile",
     icon: "fas fa-heart",
     routeName: "me",
+    requireLogin: true,
+  },
+];
+
+const menuBottom = [
+  {
+    title: "login",
+    icon: "fas fa-user",
+    routeName: "login",
+  },
+  {
+    title: "logout",
+    icon: "fas fa-right-from-bracket",
+    requireLogin: true
   },
 ];
 
@@ -37,42 +54,22 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
-    const router = useRouter();
-
-    const $q = useQuasar();
-
-    const { logout, isLoggedIn } = useAuthUser();
-
-    const miniState = ref(true);
-
-    const handleLogout = async () => {
-      $q.dialog({
-        title: "Logout",
-        message: "Do you really want to leave?",
-        cancel: true,
-        persistent: false,
-      }).onOk(async () => {
-        await logout();
-        router.replace({ name: "login" });
-      });
-    };
+    const { t } = useI18n();
 
     return {
-      essentialLinks: linksList,
+      menuTop,
+      menuBottom,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
-      handleLogout,
-      miniState,
-      isLoggedIn,
     };
   },
 });
 </script>
 
 <template>
-  <q-layout view="hHh Lpr lff">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -88,36 +85,30 @@ export default defineComponent({
 
         <dark-mode-toggle />
         <language-toggle />
-
-        <q-btn-dropdown v-if="isLoggedIn()" flat icon="person">
-          <q-list>
-            <q-item clickable v-close-popup @click="handleLogout">
-              <q-item-section>
-                <q-item-label>Logout</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :mini="miniState"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
-      mini-to-overlay
-      :width="200"
+      :width="210"
       :breakpoint="500"
-      bordered
+      overlay
+      elevated
     >
       <q-list>
         <EssentialLink
-          v-for="link in essentialLinks"
+          v-for="link in menuTop"
           :key="link.title"
           v-bind="link"
         />
+        <div class="fixed-bottom">
+          <EssentialLink
+            v-for="link in menuBottom"
+            :key="link.title"
+            v-bind="link"
+          />
+        </div>
       </q-list>
     </q-drawer>
 

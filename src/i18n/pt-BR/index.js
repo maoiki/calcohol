@@ -21,6 +21,9 @@ export default {
     "Para adicionar uma nova bebida, você deve estar logado",
 
   login: "Entrar",
+  logout: "Sair",
+  logoutMessage: "Deseja realmente sair?",
+  ok: "ok",
   cancel: "Cancelar",
   name: "Nome",
   register: "Cadastre-se",
@@ -44,4 +47,8 @@ export default {
   emailRequired: "É necessário informar um email",
   passwordRequired: "É necessário informar uma senha",
   passwordMinimum: "A senha deve possuir no mínimo 6 characters",
+
+  home: "Início",
+  addDrink: "Adicionar bebida",
+  profile: "Perfil",
 };
