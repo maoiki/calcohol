@@ -1,0 +1,39 @@
+.welcome {
+  color: $c-black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 50px;
+}
+body.body--dark .welcome {
+  color: $c-white;
+}
+
+.separator {
+  font-size: 14px;
+  color: $c-black;
+
+  margin: 32px 0;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: $c-gray-2;
+    margin-right: 16px;
+  }
+
+  &::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: $c-gray-2;
+    margin-left: 16px;
+  }
+}
+body.body--dark .separator {
+  color: $c-white;
+}

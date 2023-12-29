@@ -9,7 +9,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    const { login, isLoggedIn } = useAuthUser();
+    const { login, isLoggedIn, loginWithSocialProvider } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
 
@@ -36,9 +36,19 @@ export default defineComponent({
       }
     };
 
+    const handleLoginGoogle = async () => {
+      try {
+        await loginWithSocialProvider("google");
+        notifySuccess();
+      } catch (error) {
+        notifyError(error.message);
+      }
+    };
+
     return {
       form,
       handleLogin,
+      handleLoginGoogle,
       isPassword,
     };
   },
@@ -46,20 +56,38 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding>
-    <q-form class="row justify-center" @submit.prevent="handleLogin">
-      <h1 class="col-12 text-center">{{ $t("login") }}</h1>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
+  <q-page padding class="inputs-content">
+    <h1 class="welcome">{{ $t("welcomeBack") }}</h1>
+
+    <q-btn
+      class="google-button"
+      @click="handleLoginGoogle"
+      no-caps
+      unelevated
+      align="between"
+    >        
+      <q-icon name="fa-brands fa-google" />
+
+      {{ $t("signInGoogle") }}
+
+      <q-icon name="fa-brands fa-google" class="invisible" />
+    </q-btn>
+
+    <p class="separator">{{ $t("or") }}</p>
+    <q-form @submit.prevent="handleLogin">
+      <div class="q-gutter-y-lg">
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
           type="email"
+          v-bind="{ ...$visualInput }"
         />
         <q-input
           :label="$t('password')"
           v-model="form.password"
+          v-bind="{ ...$visualInput }"
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('passwordRequired'),
@@ -75,33 +103,23 @@ export default defineComponent({
             />
           </template>
         </q-input>
-        <div class="full-width q-pt-md">
+        <div class="q-pt-md">
           <q-btn
             :label="$t('login')"
-            color="primary"
-            class="full-width"
             type="submit"
-            rounded
-            outline
+            v-bind="{ ...$visualRoundButton }"
           />
         </div>
-        <div class="full-width q-gutter-y-md">
-          <q-btn
-            :label="$t('register')"
-            color="primary"
-            class="full-width"
-            :to="{ name: 'register' }"
-            rounded
-            flat
-          />
+        <div>
           <q-btn
             :label="$t('forgotPassword')"
-            color="primary"
-            class="full-width"
-            size="sm"
             :to="{ name: 'forgot-password' }"
-            rounded
-            flat
+            v-bind="{ ...$visualTextButton }"
+          />
+          <q-btn
+            :label="$t('signUpButton')"
+            :to="{ name: 'register' }"
+            v-bind="{ ...$visualTextButton }"
           />
         </div>
       </div>

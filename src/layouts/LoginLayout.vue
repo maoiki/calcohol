@@ -1,8 +1,14 @@
 <script>
 import { defineComponent} from 'vue'
+import DarkModeToggle from "components/DarkModeToggle.vue";
+import LanguageToggle from "src/components/LanguageToggle.vue";
 
 export default defineComponent({
   name: 'LoginLayout',
+  components: {
+    DarkModeToggle,
+    LanguageToggle,
+  },
   setup () {
     return {
     }
@@ -17,6 +23,8 @@ export default defineComponent({
         <q-toolbar-title>
           Calcohol
         </q-toolbar-title>
+        <dark-mode-toggle />
+        <language-toggle />
       </q-toolbar>
     </q-header>
 

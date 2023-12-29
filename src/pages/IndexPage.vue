@@ -19,7 +19,7 @@ export default defineComponent({
     const { t } = useI18n();
     const $q = useQuasar();
     const router = useRouter();
-    const {isLoggedIn } = useAuthUser();
+    const { isLoggedIn } = useAuthUser();
 
     const form = ref({
       name: "",
@@ -34,6 +34,11 @@ export default defineComponent({
       form.value.price = "";
     };
 
+    const showResults = () => {
+      let r = form.value.ml && (form.value.abv || form.value.price);
+      return !!r;
+    };
+
     const handleRedirectLogin = () => {
       if (isLoggedIn()) {
         router.replace({ name: "form-beverage" });
@@ -43,8 +48,14 @@ export default defineComponent({
           message: t("redirectLoginMessage"),
           ok: {
             label: t("login"),
+            color: "primary",
+            class: "primary-button",
           },
-          cancel: true,
+          cancel: {
+            label: t("cancel"),
+            flat: true,
+            color: "primary",
+          },
           persistent: false,
         }).onOk(() => {
           router.replace({ name: "login" });
@@ -59,6 +70,7 @@ export default defineComponent({
       formatPriceLiterAlcohol,
       handleResetFields,
       handleRedirectLogin,
+      showResults,
     };
   },
 });
@@ -72,7 +84,12 @@ export default defineComponent({
       <div class="row flex-center">
         <h1 class="text-h5">{{ $t("indexTitle") }}</h1>
         <q-space></q-space>
-        <q-btn @click="handleRedirectLogin" round color="primary" icon="add" />
+        <q-btn
+          @click="handleRedirectLogin"
+          round
+          icon="bookmark"
+          class="primary-button"
+        />
       </div>
       <q-input
         standout="bg-primary text-white"
@@ -116,72 +133,69 @@ export default defineComponent({
       icon="fas fa-rotate-left"
       :label="$t('reset')"
     />
-
-    <div
-      v-if="$q.platform.is.mobile"
-      class="q-pa-md no-margin fixed-bottom container_bg rounded_container"
+    <transition
+      appear
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOutDown"
     >
-      <h1 class="text-h5 text-left">
-        {{ $t("results") }}
-      </h1>
-      <div class="flex-center q-gutter-md row">
-        <q-card flat class="result_card">
-          <q-card-section horizontal>
+      <div
+        v-if="showResults()"
+        class="q-pa-md container_bg"
+        :class="
+          $q.platform.is.desktop
+            ? 'q-mx-auto max_container border_desktop '
+            : 'no-margin fixed-bottom rounded_container'
+        "
+        key="result"
+      >
+        <h1
+          class="text-h5 text-left"
+          :class="$q.platform.is.desktop ? 'title_results' : ''"
+        >
+          {{ $t("results") }}
+        </h1>
+        <div class="row q-gutter-md flex-center">
+          <q-card
+            flat
+            :class="
+              $q.platform.is.desktop
+                ? 'border_desktop result_card_desktop text-center'
+                : 'result_card'
+            "
+          >
             <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
-            <q-space />
             <q-card-section>
               {{ formatAmountAlcohol(form.abv, form.ml) }}
             </q-card-section>
-          </q-card-section>
-        </q-card>
-        <q-card flat class="result_card">
-          <q-card-section horizontal>
+          </q-card>
+          <q-card
+            flat
+            :class="
+              $q.platform.is.desktop
+                ? 'border_desktop result_card_desktop text-center'
+                : 'result_card'
+            "
+          >
             <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
-            <q-space />
-            <q-card-section class="flex-center">
+            <q-card-section>
               {{ formatPriceLiterBeverage(form.price, form.ml) }}
             </q-card-section>
-          </q-card-section>
-        </q-card>
-        <q-card flat class="result_card">
-          <q-card-section horizontal>
+          </q-card>
+          <q-card
+            flat
+            :class="
+              $q.platform.is.desktop
+                ? 'border_desktop result_card_desktop text-center'
+                : 'result_card'
+            "
+          >
             <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
-            <q-space />
             <q-card-section>
               {{ formatPriceLiterAlcohol(form.abv, form.ml, form.price) }}
             </q-card-section>
-          </q-card-section>
-        </q-card>
+          </q-card>
+        </div>
       </div>
-    </div>
-
-    <div
-      v-else
-      class="q-pa-md q-mx-auto max_container border_desktop container_bg"
-    >
-      <h1 class="text-h5 text-left title_results">
-        {{ $t("results") }}
-      </h1>
-      <div class="row q-gutter-md flex-center">
-        <q-card flat class="border_desktop result_card_desktop text-center">
-          <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
-          <q-card-section>
-            {{ formatAmountAlcohol(form.abv, form.ml) }}
-          </q-card-section>
-        </q-card>
-        <q-card flat class="border_desktop result_card_desktop text-center">
-          <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
-          <q-card-section>
-            {{ formatPriceLiterBeverage(form.price, form.ml) }}
-          </q-card-section>
-        </q-card>
-        <q-card flat class="border_desktop result_card_desktop text-center">
-          <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
-          <q-card-section>
-            {{ formatPriceLiterAlcohol(form.abv, form.ml, form.price) }}
-          </q-card-section>
-        </q-card>
-      </div>
-    </div>
+    </transition>
   </q-page>
 </template>

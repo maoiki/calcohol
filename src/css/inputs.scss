@@ -1,0 +1,9 @@
+.inputs {
+  background-color: $surface-light;
+  border-radius: 7px;
+  padding: 0 16px;
+}
+
+body.body--dark .inputs {
+  background-color: $surface-dark;
+}
