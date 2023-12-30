@@ -92,34 +92,25 @@ export default defineComponent({
         />
       </div>
       <q-input
-        standout="bg-primary text-white"
-        rounded
-        clearable
-        clear-icon="close"
         v-model.number="form.ml"
         :label="$t('amountLabel')"
         inputmode="decimal"
+        v-bind="{ ...$visualInput,... $visualClearable }"
       />
 
       <q-input
-        standout="bg-primary text-white"
-        rounded
-        clearable
-        clear-icon="close"
         v-model.number="form.abv"
         :label="$t('abvLabel')"
         inputmode="decimal"
+        v-bind="{...$visualInput, ...$visualClearable }"
       />
       <q-input
-        standout="bg-primary text-white"
-        rounded
-        clearable
-        clear-icon="close"
         v-model.number="form.price"
         :label="$t('priceLabel')"
         prefix="$"
         step="false"
         inputmode="decimal"
+        v-bind="{...$visualInput, ...$visualClearable }"
       />
     </div>
 

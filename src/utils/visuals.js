@@ -3,9 +3,14 @@ const input = {
   borderless: true,
 };
 
+const clearableInput = {
+  clearable: true,
+  "clear-icon": "close",
+};
+
 const roundButton = {
-  class: "round-button full-width",
-  "text-color": "dark",
+  class: "round-button full-width primary-button",
+  color:"primary",
   "no-caps": true,
   unelevated: true,
   padding: "sm",
@@ -18,6 +23,7 @@ const textButton = {
   rounded: true,
   dense: true,
   class: "full-width",
+  color:"primary"
 };
 
-export { input, roundButton, textButton };
+export { input, clearableInput, roundButton, textButton };
