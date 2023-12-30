@@ -30,7 +30,7 @@ export default {
   register: "Register",
   signUpButton: "Don't have an account? Sign up",
   password: "Password",
-  passwordReset: "Password reset",
+  passwordReset: "Create a new password!",
   newPassword: "New password",
   forgotPassword: "Forgot your password?",
   confirmNewPassword: "Confirm your new password",
