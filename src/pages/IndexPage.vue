@@ -34,6 +34,14 @@ export default defineComponent({
       form.value.price = "";
     };
 
+    const validateAbv = () => {
+      const abv = parseFloat(form.value.abv);
+
+      if (abv > 100) {
+        form.value.abv = '100.0';
+      }
+    };
+
     const showResults = () => {
       let r = form.value.ml && (form.value.abv || form.value.price);
       return !!r;
@@ -71,6 +79,7 @@ export default defineComponent({
       handleResetFields,
       handleRedirectLogin,
       showResults,
+      validateAbv,
     };
   },
 });
@@ -92,25 +101,32 @@ export default defineComponent({
         />
       </div>
       <q-input
+        maxlength="15"
         v-model.number="form.ml"
         :label="$t('amountLabel')"
         inputmode="decimal"
-        v-bind="{ ...$visualInput,... $visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
 
       <q-input
-        v-model.number="form.abv"
+        maxlength="5"
+        v-model="form.abv"
         :label="$t('abvLabel')"
         inputmode="decimal"
-        v-bind="{...$visualInput, ...$visualClearable }"
+        mask="###.#"
+        reverse-fill-mask
+        v-bind="{ ...$visualInput, ...$visualClearable }"
+        @update:model-value="validateAbv"
       />
       <q-input
+        maxlength="15"
         v-model.number="form.price"
         :label="$t('priceLabel')"
         prefix="$"
-        step="false"
         inputmode="decimal"
-        v-bind="{...$visualInput, ...$visualClearable }"
+        mask="#.##"
+        reverse-fill-mask
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
     </div>
 
