@@ -64,4 +64,6 @@ export default {
 
   updateSuccess: "Atualizado com sucesso",
   saveSuccess: "Salvo com sucesso",
+  operationSucess: "Operação realizada com sucesso",
+  operationFail: "Ops! Algo deu errado",
 };

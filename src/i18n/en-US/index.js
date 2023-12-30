@@ -44,7 +44,7 @@ export default {
   update: "Update",
   sentRecoveryEmail: "Recovery email sent to: {email}",
   fillEmail: "Enter your email address here",
-  error404:"Oops. Nothing here...",
+  error404: "Oops. Nothing here...",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",
@@ -63,4 +63,6 @@ export default {
 
   updateSuccess: "Updated successfully",
   saveSuccess: "Saved successfully",
+  operationSucess: "Operation successfully completed",
+  operationFail: "Ops! Something went wrong",
 };
