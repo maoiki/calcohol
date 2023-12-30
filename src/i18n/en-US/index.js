@@ -42,12 +42,15 @@ export default {
   or: "OR",
   save: "Save",
   update: "Update",
+  sentRecoveryEmail: "Recovery email sent to: {email}",
+  fillEmail: "Enter your email address here",
+  error404:"Oops. Nothing here...",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",
 
   nameRequired: "Name is required",
-  emailRequired: "Email is required",
+  emailRequired: "A valid email is required",
   amountRequired: "Amount is required and must be a positive integer",
   abvRequired: "ABV is required and must be a positive number",
   priceRequired: "Price is required and must be a positive number",

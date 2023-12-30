@@ -8,7 +8,7 @@ export default {
   indexTitle: "Detalhes da bebida",
   results: "Resultados",
 
-  saveDrinkTitle:"Salve sua bebida",
+  saveDrinkTitle: "Salve sua bebida",
 
   amountLabel: "Quantidade de ml",
   abvLabel: "Teor alcólico",
@@ -43,17 +43,20 @@ export default {
   or: "OU",
   save: "Salvar",
   update: "Atualizar",
+  sentRecoveryEmail: "Email de recuperação enviado para: {email}",
+  fillEmail: "Insira aqui seu e-mail",
+  error404: "Oops. Página não encontrada...",
 
   signInGoogle: "Entrar com o Google",
   signUpGoogle: "Cadastrar com o Google",
 
   nameRequired: "É necessário informar um nome",
-  emailRequired: "É necessário informar um email",
+  emailRequired: "É necessário informar um email válido",
   amountRequired: "É necessário informar a quantidade",
   abvRequired: "É necessário informar o teor alcólico",
   priceRequired: "É necessário informar o preço",
   passwordRequired: "É necessário informar uma senha",
-  passwordMinimum: "A senha deve possuir no mínimo 6 characters",
+  passwordMinimum: "A senha deve possuir no mínimo 6 caracteres",
 
   home: "Início",
   addDrink: "Adicionar bebida",

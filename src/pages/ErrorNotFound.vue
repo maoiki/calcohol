@@ -1,21 +1,19 @@
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
-    <div>
-      <div style="font-size: 30vh">
-        404
-      </div>
+  <div
+    class="fullscreen bg-primary text-white text-center q-pa-md flex flex-center"
+  >
+    <div class="q-ma-md">
+      <h1>404</h1>
 
-      <div class="text-h2" style="opacity:.4">
-        Oops. Nothing here...
-      </div>
+      <h2 class="text-h3"  style="opacity: 0.4">{{$t('error404')}}</h2>
 
       <q-btn
         class="q-mt-xl"
         color="white"
-        text-color="blue"
+        text-color="primary"
         unelevated
         to="/"
-        label="Go Home"
+        :label="$t('goBack')"
         no-caps
       />
     </div>
@@ -23,9 +21,9 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'ErrorNotFound'
-})
+  name: "ErrorNotFound",
+});
 </script>
