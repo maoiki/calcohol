@@ -8,6 +8,8 @@ export default {
   indexTitle: "Beverage details",
   results: "Results",
 
+  saveDrinkTitle: "Save beverage",
+
   amountLabel: "Amount of ml",
   abvLabel: "ABV",
   priceLabel: "Price",
@@ -38,16 +40,24 @@ export default {
   welcome: "Welcome!",
   welcomeBack: "Welcome back!",
   or: "OR",
+  save: "Save",
+  update: "Update",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",
 
   nameRequired: "Name is required",
   emailRequired: "Email is required",
+  amountRequired: "Amount is required and must be a positive integer",
+  abvRequired: "ABV is required and must be a positive number",
+  priceRequired: "Price is required and must be a positive number",
   passwordRequired: "Password is required",
   passwordMinimum: "Password must contain at least 6 characters",
 
   home: "Home",
   addDrink: "Add drink",
-  profile:"Profile"
+  profile: "Profile",
+
+  updateSuccess: "Updated successfully",
+  saveSuccess: "Saved successfully",
 };

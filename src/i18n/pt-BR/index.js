@@ -8,6 +8,8 @@ export default {
   indexTitle: "Detalhes da bebida",
   results: "Resultados",
 
+  saveDrinkTitle:"Salve sua bebida",
+
   amountLabel: "Quantidade de ml",
   abvLabel: "Teor alcólico",
   priceLabel: "Preço",
@@ -39,16 +41,24 @@ export default {
   welcome: "Bem-vindo!",
   welcomeBack: "Bem-vindo de volta!",
   or: "OU",
+  save: "Salvar",
+  update: "Atualizar",
 
   signInGoogle: "Entrar com o Google",
   signUpGoogle: "Cadastrar com o Google",
 
   nameRequired: "É necessário informar um nome",
   emailRequired: "É necessário informar um email",
+  amountRequired: "É necessário informar a quantidade",
+  abvRequired: "É necessário informar o teor alcólico",
+  priceRequired: "É necessário informar o preço",
   passwordRequired: "É necessário informar uma senha",
   passwordMinimum: "A senha deve possuir no mínimo 6 characters",
 
   home: "Início",
   addDrink: "Adicionar bebida",
   profile: "Perfil",
+
+  updateSuccess: "Atualizado com sucesso",
+  saveSuccess: "Salvo com sucesso",
 };

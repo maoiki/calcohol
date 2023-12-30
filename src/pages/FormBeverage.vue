@@ -3,6 +3,7 @@ import { defineComponent, ref, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "IndexPage",
@@ -11,6 +12,8 @@ export default defineComponent({
     const { notifyError, notifySuccess } = useNotify();
 
     const table = "beverages";
+
+    const { t } = useI18n();
 
     const router = useRouter();
 
@@ -40,17 +43,16 @@ export default defineComponent({
       try {
         if (isUpdate.value) {
           await update(table, form.value);
-          notifySuccess("Update Successfully");
+          notifySuccess(t("updateSuccess"));
         } else {
           await post(table, form.value);
-          notifySuccess("Saved Successfully");
+          notifySuccess(t("saveSuccess"));
         }
         router.push({ name: "me" });
       } catch (error) {
         notifyError(error.message);
       }
     };
-    
 
     const isUpdate = computed(() => route.params.id);
 
@@ -69,71 +71,57 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page class="flex flex-center">
-    <q-form
-      class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
-      @submit.prevent="handleSubmit"
-    >
+  <q-page padding class="inputs-content">
+    <div class="flex flex-center">
+      <h1 class="text-h5">{{ $t("saveDrinkTitle") }}</h1>
+    </div>
+
+    <q-form class="q-gutter-y-md q-px-sm" @submit.prevent="handleSubmit">
       <q-input
-        clearable
-        clear-icon="close"
-        filled
+        class="mb-32"
         v-model="form.name"
-        label="Name"
+        :label="$t('name')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+        :rules="[(val) => (val && val.length > 0) || $t('nameRequired')]"
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
       <q-input
-        clearable
-        clear-icon="close"
-        filled
+        class="mb-32"
         v-model.number="form.ml"
-        label="Amount of ml"
+        :label="$t('amountLabel')"
         lazy-rules
         :rules="[
-          (val) =>
-            (val > 0 && Number.isInteger(val)) ||
-            'Amount is required and must be a positive integer',
+          (val) => (val > 0 && Number.isInteger(val)) || $t('amountRequired'),
         ]"
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
       <q-input
-        clearable
-        clear-icon="close"
-        filled
+        class="mb-32"
         v-model.number="form.abv"
-        label="ABV"
+        :label="$t('abvLabel')"
         lazy-rules
-        :rules="[
-          (val) => val > 0 || 'ABV is required and must be a positive number',
-        ]"
+        :rules="[(val) => val > 0 || $t('abvRequired')]"
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
       <q-input
-        clearable
-        clear-icon="close"
-        filled
+        class="mb-32"
         v-model.number="form.price"
-        label="Price"
+        :label="$t('priceLabel')"
         prefix="R$"
         lazy-rules
-        :rules="[
-          (val) => val > 0 || 'Price is required and must be a positive number',
-        ]"
+        :rules="[(val) => val > 0 || $t('priceRequired')]"
+        v-bind="{ ...$visualInput, ...$visualClearable }"
       />
 
       <q-btn
-        :label="isUpdate ? 'Update' : 'Save'"
-        rounded
-        color="primary"
-        class="full-width"
+        :label="isUpdate ? $t('update') : $t('save')"
         type="submit"
+        v-bind="{ ...$visualRoundButton }"
       />
       <q-btn
-        label="Cancel"
-        color="primary"
-        class="full-width"
+        :label="$t('cancel')"
         :to="{ name: 'me' }"
-        rounded
-        flat
+        v-bind="{ ...$visualTextButton }"
       />
     </q-form>
   </q-page>
