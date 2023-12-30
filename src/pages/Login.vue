@@ -3,7 +3,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
-import { emailValidation, passwordValidation } from "src/utils/validation";
+import useValidation from "src/composables/useValidation";
 
 export default defineComponent({
   name: "LoginPage",
@@ -13,6 +13,8 @@ export default defineComponent({
     const { login, isLoggedIn, loginWithSocialProvider } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
+
+    const { emailValidation, passwordValidation } = useValidation();
 
     const form = ref({
       email: "",
@@ -83,7 +85,7 @@ export default defineComponent({
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[emailValidation($t('emailRequired'))]"
+          :rules="[emailValidation()]"
           type="email"
           v-bind="{ ...$visualInput }"
         />
@@ -92,7 +94,7 @@ export default defineComponent({
           v-model="form.password"
           v-bind="{ ...$visualInput }"
           lazy-rules
-          :rules="[passwordValidation($t('passwordMinimum'))]"
+          :rules="[passwordValidation()]"
           :type="isPassword ? 'password' : 'text'"
         >
           <template v-slot:append>

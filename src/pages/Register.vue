@@ -3,11 +3,7 @@ import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
-import {
-  emailValidation,
-  passwordValidation,
-  usernameValidation,
-} from "src/utils/validation";
+import useValidation from "src/composables/useValidation";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -18,6 +14,9 @@ export default defineComponent({
     const { register } = useAuthUser();
 
     const { notifyError, notifySuccess } = useNotify();
+
+    const { usernameValidation, emailValidation, passwordValidation } =
+      useValidation();
 
     const isPassword = ref(true);
 
@@ -76,14 +75,14 @@ export default defineComponent({
           :label="$t('name')"
           v-model="form.name"
           lazy-rules
-          :rules="[usernameValidation($t('nameRequired'))]"
+          :rules="[usernameValidation()]"
           v-bind="{ ...$visualInput }"
         />
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[emailValidation($t('emailRequired'))]"
+          :rules="[emailValidation()]"
           type="email"
           v-bind="{ ...$visualInput }"
         />
@@ -92,7 +91,7 @@ export default defineComponent({
           :label="$t('password')"
           v-model="form.password"
           lazy-rules
-          :rules="[passwordValidation($t('passwordMinimum'))]"
+          :rules="[passwordValidation()]"
           :type="isPassword ? 'password' : 'text'"
           :hint="$t('passwordMinimum')"
           v-bind="{ ...$visualInput }"

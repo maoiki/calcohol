@@ -2,6 +2,8 @@
 import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
+import useValidation from "src/composables/useValidation";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ForgotPasswordPage",
@@ -11,12 +13,16 @@ export default defineComponent({
 
     const { notifyError, notifySuccess } = useNotify();
 
+    const { t } = useI18n();
+
+    const { emailValidation } = useValidation();
+
     const email = ref("");
 
     const handleForgotPassword = async () => {
       try {
         await sendPasswordResetEmail(email.value);
-        notifySuccess(`Recovery email sent to: ${email.value}`);
+        notifySuccess(t("sentRecoveryEmail", { email: email.value }));
       } catch (error) {
         notifyError(error.message);
       }
@@ -25,6 +31,7 @@ export default defineComponent({
     return {
       email,
       handleForgotPassword,
+      emailValidation,
     };
   },
 });
@@ -32,13 +39,13 @@ export default defineComponent({
 <template>
   <q-page class="inputs-content q-px-md">
     <h1 class="welcome">{{ $t("forgotPassword") }}</h1>
-    <q-form  @submit.prevent="handleForgotPassword">
+    <q-form @submit.prevent="handleForgotPassword">
       <div clas>
         <q-input
-          label="Email"
+          :label="$t('fillEmail')"
           v-model="email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+          :rules="[emailValidation()]"
           type="email"
           class="mb-40"
           v-bind="{ ...$visualInput }"
@@ -51,7 +58,6 @@ export default defineComponent({
             v-bind="{ ...$visualRoundButton }"
           />
           <q-btn
-            v-if="$q.platform.is.desktop"
             :label="$t('goBack')"
             :to="{ name: 'login' }"
             v-bind="{ ...$visualTextButton }"
