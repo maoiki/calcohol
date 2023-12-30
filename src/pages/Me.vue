@@ -104,7 +104,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding>
+  <q-page class="q-px-md">
     <h1 class="text-h3">Hi, {{ user.user_metadata.name }}!</h1>
     <div class="col-12">
       <q-table

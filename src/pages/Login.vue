@@ -56,7 +56,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding class="inputs-content">
+  <q-page class="inputs-content q-px-md">
     <h1 class="welcome">{{ $t("welcomeBack") }}</h1>
 
     <q-btn

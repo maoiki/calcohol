@@ -71,7 +71,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding class="inputs-content">
+  <q-page class="inputs-content q-px-md">
     <div class="flex flex-center">
       <h1 class="text-h5">{{ $t("saveDrinkTitle") }}</h1>
     </div>

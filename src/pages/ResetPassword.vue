@@ -37,7 +37,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding class="inputs-content">
+  <q-page class="inputs-content q-px-md">
     <h1 class="col-12 text-center">{{ $t("passwordReset") }}</h1>
     <q-form class="row justify-center" @submit.prevent="handlePasswordReset">
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
