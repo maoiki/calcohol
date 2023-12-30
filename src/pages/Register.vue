@@ -3,6 +3,11 @@ import { defineComponent, ref } from "vue";
 import useAuthUser from "src/composables/UseAuthUser";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
+import {
+  emailValidation,
+  passwordValidation,
+  usernameValidation,
+} from "src/utils/validation";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -39,6 +44,9 @@ export default defineComponent({
       form,
       handleRegister,
       isPassword,
+      emailValidation,
+      passwordValidation,
+      usernameValidation,
     };
   },
 });
@@ -53,7 +61,7 @@ export default defineComponent({
       no-caps
       unelevated
       align="between"
-    >        
+    >
       <q-icon name="fa-brands fa-google" />
 
       {{ $t("signUpGoogle") }}
@@ -65,17 +73,17 @@ export default defineComponent({
     <q-form class="" @submit.prevent="handleRegister">
       <div class="q-gutter-y-lg">
         <q-input
-          :label="$t('Name')"
+          :label="$t('name')"
           v-model="form.name"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('nameRequired') ]"
+          :rules="[usernameValidation($t('nameRequired'))]"
           v-bind="{ ...$visualInput }"
         />
         <q-input
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('emailRequired')]"
+          :rules="[emailValidation($t('emailRequired'))]"
           type="email"
           v-bind="{ ...$visualInput }"
         />
@@ -84,10 +92,7 @@ export default defineComponent({
           :label="$t('password')"
           v-model="form.password"
           lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || $t('passwordRequired'),
-            (val) => (val && val.length >= 6) || $t('passwordMinimum'),
-          ]"
+          :rules="[passwordValidation($t('passwordMinimum'))]"
           :type="isPassword ? 'password' : 'text'"
           :hint="$t('passwordMinimum')"
           v-bind="{ ...$visualInput }"
