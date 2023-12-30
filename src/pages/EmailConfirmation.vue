@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page class="q-px-md">
+  <q-page class="q-pa-md">
     <h1>Thanks for registering!</h1>
     <p class="text-body1">
       Please confirm your email address to complete the registration:

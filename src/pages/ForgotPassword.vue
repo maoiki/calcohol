@@ -37,10 +37,9 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page class="inputs-content q-px-md">
+  <q-page class="inputs-content q-pa-md">
     <h1 class="welcome">{{ $t("forgotPassword") }}</h1>
     <q-form @submit.prevent="handleForgotPassword">
-      <div clas>
         <q-input
           :label="$t('fillEmail')"
           v-model="email"
@@ -62,7 +61,6 @@ export default defineComponent({
             :to="{ name: 'login' }"
             v-bind="{ ...$visualTextButton }"
           />
-        </div>
       </div>
     </q-form>
   </q-page>

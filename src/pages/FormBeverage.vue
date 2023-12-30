@@ -71,7 +71,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page class="inputs-content q-px-md">
+  <q-page class="inputs-content q-pa-md">
     <div class="flex flex-center">
       <h1 class="text-h5">{{ $t("saveDrinkTitle") }}</h1>
     </div>

@@ -61,7 +61,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page class="inputs-content q-px-md">
+  <q-page class="inputs-content q-pa-md">
     <h1 class="welcome">{{ $t("welcomeBack") }}</h1>
 
     <q-btn
