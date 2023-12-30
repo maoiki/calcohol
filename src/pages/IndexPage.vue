@@ -102,6 +102,8 @@ export default defineComponent({
       </div>
       <q-input
         maxlength="15"
+        mask="#"
+        reverse-fill-mask
         v-model.number="form.ml"
         :label="$t('amountLabel')"
         inputmode="decimal"
