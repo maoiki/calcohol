@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
 import { useI18n } from "vue-i18n";
+import useValidation from "src/composables/useValidation";
 
 export default defineComponent({
   name: "IndexPage",
@@ -21,6 +22,8 @@ export default defineComponent({
 
     const { post, getById, update } = useApi();
 
+    const { drinkNameValidation, above0Validation } = useValidation();
+
     const form = ref({
       name: "",
       ml: "",
@@ -29,6 +32,14 @@ export default defineComponent({
     });
 
     let beverage = {};
+
+    const validateAbv = () => {
+      const abv = parseFloat(form.value.abv);
+
+      if (abv > 100) {
+        form.value.abv = "100.0";
+      }
+    };
 
     const handleGetBeverage = async (id) => {
       try {
@@ -66,6 +77,9 @@ export default defineComponent({
       form,
       handleSubmit,
       isUpdate,
+      drinkNameValidation,
+      validateAbv,
+      above0Validation,
     };
   },
 });
@@ -82,34 +96,47 @@ export default defineComponent({
         v-model="form.name"
         :label="$t('name')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || $t('nameRequired')]"
+        :rules="[drinkNameValidation()]"
         v-bind="{ ...$visualInput, ...$visualClearable }"
+        counter
+        maxlength="20"
       />
       <q-input
         class="mb-32"
-        v-model.number="form.ml"
+        maxlength="15"
+        mask="#"
+        reverse-fill-mask
+        inputmode="decimal"
+        v-model="form.ml"
         :label="$t('amountLabel')"
         lazy-rules
-        :rules="[
-          (val) => (val > 0 && Number.isInteger(val)) || $t('amountRequired'),
-        ]"
+        :rules="[above0Validation($t('amountRequired'))]"
         v-bind="{ ...$visualInput, ...$visualClearable }"
       />
       <q-input
         class="mb-32"
-        v-model.number="form.abv"
+        maxlength="5"
+        v-model="form.abv"
+        inputmode="decimal"
+        mask="###.#"
+        reverse-fill-mask
+        @update:model-value="validateAbv"
         :label="$t('abvLabel')"
         lazy-rules
-        :rules="[(val) => val > 0 || $t('abvRequired')]"
+        :rules="[above0Validation($t('abvRequired'))]"
         v-bind="{ ...$visualInput, ...$visualClearable }"
       />
       <q-input
         class="mb-32"
-        v-model.number="form.price"
+        maxlength="15"
+        inputmode="decimal"
+        mask="#.##"
+        reverse-fill-mask
+        v-model="form.price"
         :label="$t('priceLabel')"
         prefix="R$"
         lazy-rules
-        :rules="[(val) => val > 0 || $t('priceRequired')]"
+        :rules="[above0Validation($t('priceRequired'))]"
         v-bind="{ ...$visualInput, ...$visualClearable }"
       />
 

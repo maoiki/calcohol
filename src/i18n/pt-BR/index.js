@@ -51,6 +51,7 @@ export default {
   signUpGoogle: "Cadastrar com o Google",
 
   nameRequired: "É necessário informar um nome",
+  nameDrinkRequired: "Informe um nome com até 20 caracteres",
   emailRequired: "É necessário informar um email válido",
   amountRequired: "É necessário informar a quantidade",
   abvRequired: "É necessário informar o teor alcólico",

@@ -14,9 +14,17 @@ export default function useValidation() {
   const usernameValidation = () => (val) =>
     (val && val.length >= 1) || t("nameRequired");
 
+  const drinkNameValidation = () => (val) =>
+    (val && (val.length >= 1 || val.length <= 20)) || t("nameDrinkRequired");
+
+  const above0Validation = (errorMessage) => (val) =>
+    parseFloat(val) > 0 || errorMessage;
+
   return {
     emailValidation,
     passwordValidation,
     usernameValidation,
+    drinkNameValidation,
+    above0Validation,
   };
 }

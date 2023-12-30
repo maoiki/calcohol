@@ -50,6 +50,7 @@ export default {
   signUpGoogle: "Sign up with Google",
 
   nameRequired: "Name is required",
+  nameDrinkRequired: "Enter a name up to 20 characters long",
   emailRequired: "A valid email is required",
   amountRequired: "Amount is required and must be a positive integer",
   abvRequired: "ABV is required and must be a positive number",

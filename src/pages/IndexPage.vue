@@ -104,7 +104,7 @@ export default defineComponent({
         maxlength="15"
         mask="#"
         reverse-fill-mask
-        v-model.number="form.ml"
+        v-model="form.ml"
         :label="$t('amountLabel')"
         inputmode="decimal"
         v-bind="{ ...$visualInput, ...$visualClearable }"
@@ -122,7 +122,7 @@ export default defineComponent({
       />
       <q-input
         maxlength="15"
-        v-model.number="form.price"
+        v-model="form.price"
         :label="$t('priceLabel')"
         prefix="$"
         inputmode="decimal"
