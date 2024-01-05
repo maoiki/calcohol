@@ -17,6 +17,7 @@ export default defineComponent({
 
     onMounted(() => {
       currentLocale.value = $q.localStorage.getItem("appLocale") || "pt-BR";
+      locale.value = currentLocale.value;
     });
 
     const changeLanguage = (newLocale) => {
