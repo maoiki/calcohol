@@ -3,9 +3,6 @@ import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import DarkModeToggle from "components/DarkModeToggle.vue";
 import LanguageToggle from "src/components/LanguageToggle.vue";
-import useAuthUser from "src/composables/UseAuthUser";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 
 const menuTop = [
@@ -38,7 +35,7 @@ const menuBottom = [
   {
     title: "logout",
     icon: "fas fa-right-from-bracket",
-    requireLogin: true
+    requireLogin: true,
   },
 ];
 
@@ -54,8 +51,6 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
-    const { t } = useI18n();
-
     return {
       menuTop,
       menuBottom,
@@ -70,7 +65,7 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
@@ -81,7 +76,14 @@ export default defineComponent({
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Calcohol </q-toolbar-title>
+        <q-toolbar-title>
+          <router-link
+            :to="{ name: 'index' }"
+            class="decoration-none toolbar-title"
+          >
+            Calcohol
+          </router-link>
+        </q-toolbar-title>
 
         <dark-mode-toggle />
         <language-toggle />
@@ -92,9 +94,9 @@ export default defineComponent({
       v-model="leftDrawerOpen"
       show-if-above
       :width="210"
-      :breakpoint="500"
       overlay
-      elevated
+      bordered
+      :class="$q.dark.isActive ? '' : 'bg-grey-1'"
     >
       <q-list>
         <EssentialLink
