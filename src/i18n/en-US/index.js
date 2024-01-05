@@ -45,6 +45,14 @@ export default {
   sentRecoveryEmail: "Recovery email sent to: {email}",
   fillEmail: "Enter your email address here",
   error404: "Oops. Nothing here...",
+  search: "Search",
+  allBeverages: "All beverages",
+  hi: "Hi, {user}!",
+  delete: "Delete",
+  edit: "Edit",
+  confirm: "Confirm",
+  deleteConfirmation: 'Do you really want to delete "{beverage}"?',
+  close:"Close",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",
@@ -66,4 +74,5 @@ export default {
   saveSuccess: "Saved successfully",
   operationSucess: "Operation successfully completed",
   operationFail: "Ops! Something went wrong",
+  deleteSuccess: "Successfully deleted",
 };

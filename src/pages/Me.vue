@@ -5,7 +5,8 @@ import useApi from "src/composables/UseApi";
 import useNotify from "src/composables/UseNotify";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import { columnsBeverage, noPagination } from "src/pages/table";
+import { useI18n } from "vue-i18n";
+import { noPagination } from "src/pages/table";
 import {
   formatCurrency,
   formatPercent,
@@ -30,6 +31,8 @@ export default defineComponent({
     const router = useRouter();
 
     const $q = useQuasar();
+
+    const { t } = useI18n();
 
     const { list, remove } = useApi();
 
@@ -65,13 +68,22 @@ export default defineComponent({
     const handleRemoveBeverage = async (beverage) => {
       try {
         $q.dialog({
-          title: "Confirm",
-          message: `Do you really want to delete ${beverage.name} ?`,
-          cancel: true,
+          title: t("confirm"),
+          message: t("deleteConfirmation", { beverage: beverage.name }),
+          ok: {
+            label: t("delete"),
+            color: "primary",
+            class: "primary-button",
+          },
+          cancel: {
+            label: t("cancel"),
+            flat: true,
+            color: "primary",
+          },
           persistent: false,
         }).onOk(async () => {
           await remove(table, beverage.id);
-          notifySuccess("Successfully deleted");
+          notifySuccess(t("deleteSuccess"));
           handleListBeverages();
         });
       } catch (error) {
@@ -93,11 +105,10 @@ export default defineComponent({
       handleEdit,
       handleRemoveBeverage,
       filter,
-      columnsBeverage,
       formatCurrency,
       formatPercent,
       formatUnitMeasure,
-      noPagination
+      noPagination,
     };
   },
 });
@@ -105,70 +116,84 @@ export default defineComponent({
 
 <template>
   <q-page class="q-pa-md">
-    <h1 class="text-h3">Hi, {{ user.user_metadata.name }}!</h1>
-    <div class="col-12">
-      <q-table
-        title="Beverages"
-        :rows="beverages"
-        :columns="columnsBeverage"
-        row-key="name"
-        :loading="loading"
-        :filter="filter"
-        v-model:pagination="noPagination"
-        :hide-pagination="true"
-        grid
-      >
-        <template v-slot:top-right>
-          <q-input
-            borderless
-            dense
-            debounce="300"
-            v-model="filter"
-            placeholder="Search"
+    <h1 class="text-h3">{{ $t("hi", { user: user.user_metadata.name }) }}</h1>
+    <q-table
+      :title="$t('allBeverages')"
+      :rows="beverages"
+      row-key="name"
+      :loading="loading"
+      :filter="filter"
+      v-model:pagination="noPagination"
+      :hide-pagination="true"
+      grid
+    >
+      <template v-slot:top-right>
+        <q-input
+          v-bind="{ ...$visualInput, ...$visualClearable }"
+          dense
+          debounce="300"
+          v-model="filter"
+          :placeholder="$t('search')"
+        >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+      </template>
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <q-card
+            flat
+            bordered
+            class="cursor-pointer"
+            v-ripple:primary
+            @click="handleShowDetails(props.row)"
           >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </template>
-        <template v-slot:item="props">
-          <div class="q-pa-xs col-xs-6 col-sm-3 col-md-2">
-            <q-card
-              flat
-              bordered
-              class="cursor-pointer"
-              v-ripple:primary
-              @click="handleShowDetails(props.row)"
-            >
-              <q-card-section class="flex space-around">
-                <strong>{{ props.row.name }}</strong>
-              </q-card-section>
-              <q-separator />
-              <q-card-section class="flex flex-center q-gutter-x-lg">
-                <q-icon
-                  name="fas fa-wine-bottle"
-                  size="24px"
-                  class="flex-start"
-                />
-                <div>{{ formatUnitMeasure(props.row.ml) }}</div>
-              </q-card-section>
-              <q-card-section class="flex flex-center q-gutter-x-lg">
-                <q-icon name="fas fa-percent" size="24px" class="flex-start" />
-                <div>{{ formatPercent(props.row.abv) }}</div>
-              </q-card-section>
-              <q-card-section class="flex flex-center q-gutter-x-lg">
-                <q-icon name="fas fa-coins" size="24px" class="" />
-                <div class="col-1">{{ formatCurrency(props.row.price) }}</div>
-              </q-card-section>
-            </q-card>
-          </div>
-        </template>
+            <q-card-section class="row justify-between">
+              <strong>{{ props.row.name }}</strong>
+              <div class="q-gutter-x-sm">
+                <q-btn
+                  icon="fas fa-pen"
+                  v-bind="{ ...$visualSmallButton }"
+                  @click.stop="handleEdit(props.row)"
+                >
+                  <q-tooltip>{{ $t("edit") }} </q-tooltip>
+                </q-btn>
+                <q-btn
+                  icon="fas fa-trash"
+                  v-bind="{ ...$visualSmallButton }"
+                  @click.stop="handleRemoveBeverage(props.row)"
+                >
+                  <q-tooltip> {{ $t("delete") }} </q-tooltip>
+                </q-btn>
+              </div>
+            </q-card-section>
+            <q-separator />
 
-        <template v-slot:body-cell-actions="props">
-          <q-td :props="props" class="q-gutter-x-sm"> </q-td>
-        </template>
-      </q-table>
-    </div>
+            <q-card-section>
+              <ul class="no-padding column q-gutter-y-lg mb-0">
+                <li class="flex q-gutter-x-lg">
+                  <q-icon name="fas fa-wine-bottle" size="24px" />
+                  <p class="mb-0">{{ formatUnitMeasure(props.row.ml) }}</p>
+                </li>
+                <li class="flex q-gutter-x-lg">
+                  <q-icon name="fas fa-percent" size="24px" />
+                  <p class="mb-0">{{ formatPercent(props.row.abv) }}</p>
+                </li>
+                <li class="flex q-gutter-x-lg">
+                  <q-icon name="fas fa-coins" size="24px" />
+                  <p class="mb-0">{{ formatCurrency(props.row.price) }}</p>
+                </li>
+              </ul>
+            </q-card-section>
+          </q-card>
+        </div>
+      </template>
+
+      <template v-slot:body-cell-actions="props">
+        <q-td :props="props" class="q-gutter-x-sm"> </q-td>
+      </template>
+    </q-table>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="$q.platform.is.mobile"
@@ -180,8 +205,8 @@ export default defineComponent({
     </q-page-sticky>
   </q-page>
   <dialog-beverage-details
-            :show="showDialogDetails"
-            :beverage="beverageDetails"
-            @hide-dialog="showDialogDetails = false"
-          />
+    :show="showDialogDetails"
+    :beverage="beverageDetails"
+    @hide-dialog="showDialogDetails = false"
+  />
 </template>

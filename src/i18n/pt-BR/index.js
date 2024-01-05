@@ -46,6 +46,14 @@ export default {
   sentRecoveryEmail: "Email de recuperação enviado para: {email}",
   fillEmail: "Insira aqui seu e-mail",
   error404: "Oops. Página não encontrada...",
+  search: "Buscar",
+  allBeverages: "Bebidas cadastradas",
+  hi: "Olá, {user}!",
+  delete: "Excluir",
+  edit: "Editar",
+  confirm: "Confirmação",
+  deleteConfirmation: 'Deseja realmente excluir "{beverage}"?',
+  close: "Fechar",
 
   signInGoogle: "Entrar com o Google",
   signUpGoogle: "Cadastrar com o Google",
@@ -67,4 +75,5 @@ export default {
   saveSuccess: "Salvo com sucesso",
   operationSucess: "Operação realizada com sucesso",
   operationFail: "Ops! Algo deu errado",
+  deleteSuccess: "Item deletado com sucesso",
 };

@@ -10,7 +10,7 @@ const clearableInput = {
 
 const roundButton = {
   class: "round-button full-width primary-button",
-  color:"primary",
+  color: "primary",
   "no-caps": true,
   unelevated: true,
   padding: "sm",
@@ -23,7 +23,14 @@ const textButton = {
   rounded: true,
   dense: true,
   class: "full-width",
-  color:"primary"
+  color: "primary",
 };
 
-export { input, clearableInput, roundButton, textButton };
+const smallButton = {
+  outline: true,
+  round: true,
+  size: "xs",
+  color: "blue-grey-3",
+};
+
+export { input, clearableInput, roundButton, textButton, smallButton };
