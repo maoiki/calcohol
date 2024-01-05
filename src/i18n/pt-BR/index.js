@@ -54,6 +54,7 @@ export default {
   confirm: "Confirmação",
   deleteConfirmation: 'Deseja realmente excluir "{beverage}"?',
   close: "Fechar",
+  details: "Detalhes",
 
   signInGoogle: "Entrar com o Google",
   signUpGoogle: "Cadastrar com o Google",

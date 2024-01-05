@@ -52,7 +52,8 @@ export default {
   edit: "Edit",
   confirm: "Confirm",
   deleteConfirmation: 'Do you really want to delete "{beverage}"?',
-  close:"Close",
+  close: "Close",
+  details: "Details",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",
