@@ -66,7 +66,7 @@ module.exports = configure(function (/* ctx */) {
       // analyze: true,
       env: {
         SUPABASE_URL: process.env.SUPABASE_URL,
-        SUPABASE_KEY: process.env.SUPABASE_KEY,
+        SUPABASE_KEY: process.env.SUPABASE_ANON_KEY,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
