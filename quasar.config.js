@@ -10,6 +10,7 @@
 
 const { configure } = require("quasar/wrappers");
 const path = require("path");
+require('dotenv').config()
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -64,9 +65,8 @@ module.exports = configure(function (/* ctx */) {
       // publicPath: '/',
       // analyze: true,
       env: {
-        SUPABASE_URL: "https://qhnlkkaregqnwbbfrfje.supabase.co",
-        SUPABASE_KEY:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFobmxra2FyZWdxbndiYmZyZmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Nzk5NTU0OTksImV4cCI6MTk5NTUzMTQ5OX0.6V_ByiN2N8eAHUDqhS5i3jy7nnMyt-53beaBDnb_v14",
+        SUPABASE_URL: process.env.SUPABASE_URL,
+        SUPABASE_KEY: process.env.SUPABASE_KEY,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,
