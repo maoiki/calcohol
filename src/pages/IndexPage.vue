@@ -174,7 +174,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
             <q-card-section>
-              {{ formatAmountAlcohol(form.abv, form.ml) }}
+              {{ formatAmountAlcohol(form.abv, form.ml, $i18n.locale) }}
             </q-card-section>
           </q-card>
           <q-card
@@ -187,7 +187,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
             <q-card-section>
-              {{ formatPriceLiterBeverage(form.price, form.ml) }}
+              {{ formatPriceLiterBeverage(form.price, form.ml, $i18n.locale) }}
             </q-card-section>
           </q-card>
           <q-card
