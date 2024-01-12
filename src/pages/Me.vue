@@ -178,7 +178,7 @@ export default defineComponent({
                 </li>
                 <li class="flex q-gutter-x-lg">
                   <q-icon name="fas fa-percent" size="24px" />
-                  <p class="mb-0">{{ formatPercent(props.row.abv) }}</p>
+                  <p class="mb-0">{{ $n(props.row.abv,)+'%' }}</p>
                 </li>
                 <li class="flex q-gutter-x-lg">
                   <q-icon name="fas fa-coins" size="24px" />

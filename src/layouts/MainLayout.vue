@@ -57,6 +57,7 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
+        console.log(leftDrawerOpen.value)
       },
     };
   },
@@ -64,7 +65,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hhh lpr fff">
     <q-header>
       <q-toolbar>
         <q-btn
