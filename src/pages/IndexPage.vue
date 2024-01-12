@@ -85,10 +85,10 @@ export default defineComponent({
 });
 </script>
 <template>
-  <q-page padding class="flex column">
+  <q-page class="flex column q-pa-md">
     <div
       :class="$q.platform.is.mobile ? '' : 'max_container  q-mx-auto'"
-      class="q-gutter-md q-pa-sm"
+      class="q-gutter-y-md"
     >
       <div class="row flex-center">
         <h1 class="text-h5">{{ $t("indexTitle") }}</h1>
@@ -138,13 +138,14 @@ export default defineComponent({
     <q-btn
       @click="handleResetFields"
       no-caps
-      class="q-mt-md q-mx-auto q-mt-sm q-mb-xl"
+      class="q-mt-md q-mx-auto q-mt-sm q-mb-lg"
       flat
       rounded
       color="grey-7"
       icon="fas fa-rotate-left"
       :label="$t('reset')"
     />
+
     <transition
       appear
       enter-active-class="animated fadeInUp"
@@ -152,16 +153,16 @@ export default defineComponent({
     >
       <div
         v-if="showResults()"
-        class="q-pa-md container_bg"
+        class="q-pa-md container_bg rounded_container"
         :class="
           $q.platform.is.desktop
-            ? 'q-mx-auto max_container border_desktop '
-            : 'no-margin fixed-bottom rounded_container'
+            ? 'q-mx-auto max_container'
+            : 'no-margin'
         "
         key="result"
       >
         <h1
-          class="text-h5 text-left"
+          class="results_title q-mt-none"
           :class="$q.platform.is.desktop ? 'title_results' : ''"
         >
           {{ $t("results") }}
@@ -169,9 +170,10 @@ export default defineComponent({
         <div class="row q-gutter-md flex-center">
           <q-card
             flat
+            class="rounded_container"
             :class="
               $q.platform.is.desktop
-                ? 'border_desktop result_card_desktop text-center'
+                ? 'result_card_desktop text-center'
                 : 'result_card'
             "
           >
@@ -182,9 +184,10 @@ export default defineComponent({
           </q-card>
           <q-card
             flat
+            class="rounded_container"
             :class="
               $q.platform.is.desktop
-                ? 'border_desktop result_card_desktop text-center'
+                ? 'result_card_desktop text-center'
                 : 'result_card'
             "
           >
@@ -195,9 +198,10 @@ export default defineComponent({
           </q-card>
           <q-card
             flat
+            class="rounded_container"
             :class="
               $q.platform.is.desktop
-                ? 'border_desktop result_card_desktop text-center'
+                ? 'result_card_desktop text-center'
                 : 'result_card'
             "
           >
