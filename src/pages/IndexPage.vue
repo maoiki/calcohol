@@ -38,7 +38,7 @@ export default defineComponent({
       const abv = parseFloat(form.value.abv);
 
       if (abv > 100) {
-        form.value.abv = '100.0';
+        form.value.abv = "100.0";
       }
     };
 
@@ -101,8 +101,9 @@ export default defineComponent({
         />
       </div>
       <q-input
-        maxlength="15"
-        mask="#"
+        maxlength="9"
+        :mask="$t('mlMask')"
+        unmasked-value
         reverse-fill-mask
         v-model="form.ml"
         :label="$t('amountLabel')"
@@ -115,18 +116,20 @@ export default defineComponent({
         v-model="form.abv"
         :label="$t('abvLabel')"
         inputmode="decimal"
-        mask="###.#"
+        :mask="$t('percentMask')"
+        unmasked-value
         reverse-fill-mask
         v-bind="{ ...$visualInput, ...$visualClearable }"
         @update:model-value="validateAbv"
       />
       <q-input
-        maxlength="15"
+        maxlength="10"
         v-model="form.price"
         :label="$t('priceLabel')"
-        prefix="$"
+        :prefix="$t('currencySymbol')"
         inputmode="decimal"
-        mask="#.##"
+        :mask="$t('priceMask')"
+        unmasked-value
         reverse-fill-mask
         v-bind="{ ...$visualInput, ...$visualClearable }"
       />
@@ -174,7 +177,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
             <q-card-section>
-              {{ formatAmountAlcohol(form.abv, form.ml, $i18n.locale) }}
+              {{ formatAmountAlcohol(form.abv, form.ml) }}
             </q-card-section>
           </q-card>
           <q-card
@@ -187,7 +190,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
             <q-card-section>
-              {{ formatPriceLiterBeverage(form.price, form.ml, $i18n.locale) }}
+              {{ formatPriceLiterBeverage(form.price, form.ml) }}
             </q-card-section>
           </q-card>
           <q-card

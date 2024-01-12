@@ -1,11 +1,11 @@
-import numberFormats from "src/i18n/numberFormats";
-// import i18n from "src/boot/i18n";
+import { useI18n } from "vue-i18n";
 
-const formatCurrency = (value, locale = "pt-BR") => {
-  // console.log(i18n)
-  const currencyCode = numberFormats[locale].currency.currency;
+const formatCurrency = (value) => {
+  const { locale, numberFormats } = useI18n();
 
-  const formatted = value.toLocaleString(locale, {
+  const currencyCode = numberFormats.value[locale.value].currency.currency;
+
+  const formatted = value.toLocaleString(locale.value, {
     style: "currency",
     currency: currencyCode,
   });
@@ -14,16 +14,12 @@ const formatCurrency = (value, locale = "pt-BR") => {
 };
 
 const formatUnitMeasure = (unit, locale) => {
-  let formatted = unit;
   if (unit > 1000) {
     let unitTreated = unit / 1000;
-    formatted =
-      parseFloat(unitTreated.toFixed(2)).toLocaleString(locale) + " L";
-  } else {
-    formatted = parseFloat(unit.toFixed(2)).toLocaleString(locale) + " ml";
+    return parseFloat(unitTreated.toFixed(2)).toLocaleString(locale) + " L";
   }
-  console.log("entrou!", formatted, locale);
-  return formatted;
+
+  return parseFloat(unit.toFixed(2)).toLocaleString(locale) + " ml";
 };
 
 const formatPercent = (percent) => {
@@ -32,11 +28,11 @@ const formatPercent = (percent) => {
   return formatted;
 };
 
-const formatAmountAlcohol = (abv, ml, locale) => {
+const formatAmountAlcohol = (abv, ml) => {
   if (abv && ml) {
     const abvFormatted = abv / 100;
     const amount = ml * abvFormatted;
-    const formatted = formatUnitMeasure(amount, locale);
+    const formatted = formatUnitMeasure(amount);
 
     return formatted;
   } else {
@@ -44,11 +40,11 @@ const formatAmountAlcohol = (abv, ml, locale) => {
   }
 };
 
-const formatPriceLiterBeverage = (price, ml, locale) => {
+const formatPriceLiterBeverage = (price, ml) => {
   if (price && ml) {
     const mlFormatted = 1000 / ml;
     const priceLiter = mlFormatted * price;
-    const formatted = formatCurrency(priceLiter, locale);
+    const formatted = formatCurrency(priceLiter);
 
     return formatted;
   } else {
@@ -56,7 +52,7 @@ const formatPriceLiterBeverage = (price, ml, locale) => {
   }
 };
 
-const formatPriceLiterAlcohol = (abv, ml, price, locale) => {
+const formatPriceLiterAlcohol = (abv, ml, price) => {
   if (abv && ml && price) {
     const abvFormatted = abv / 100;
     const mlFormatted = ml / 1000;
@@ -65,7 +61,7 @@ const formatPriceLiterAlcohol = (abv, ml, price, locale) => {
 
     const priceLiter = price / amount;
 
-    const formatted = formatCurrency(priceLiter, locale);
+    const formatted = formatCurrency(priceLiter);
 
     return formatted;
   } else {

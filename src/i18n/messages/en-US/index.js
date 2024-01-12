@@ -76,4 +76,10 @@ export default {
   operationSucess: "Operation successfully completed",
   operationFail: "Ops! Something went wrong",
   deleteSuccess: "Successfully deleted",
+
+  // NUMBER RELATED
+  currencySymbol: "$",
+  priceMask: "###,###,###.##",
+  percentMask: "#.#",
+  mlMask: "###,###,###,###",
 };
