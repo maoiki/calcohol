@@ -7,22 +7,24 @@
   width: min(70%, 700px);
 }
 
+.max_container2{
+width: min(70%, 688px);
+}
+
 .rounded_container {
-  border-radius: 20px 20px 0px 0px;
+  border-radius: $border-radius;
 }
 
 .result_card {
-  width: 85vw;
-  border-radius: 20px;
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: $border-radius;
 }
 
 .result_card_desktop {
   margin-bottom: 32px;
   min-width: 200px;
-}
-
-.border_desktop {
-  border-radius: 20px;
 }
 
 .centralized {
