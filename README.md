@@ -1,41 +1,29 @@
-# calcohol (calcohol)
+# <a href="https://calcohol.vercel.app" target="_blank"> Calcohol </a>
 
-Aplicação para calcular custo beneficio de cada bebida
+O Calcohol surgiu do desejo de poder calcular o custo/benefício de cada bebida e fornecer uma análise detalhada, permitindo aos usuários fazerem escolhas informadas ao comprar suas opções de bebida preferidas.
 
-## Install the dependencies
-```bash
-yarn
-# or
-npm install
-```
+<a href="https://calcohol.vercel.app" target="_blank"> O projeto já se encontra disponível aqui! </a>
+  
+## 🔧 Tecnologias/ferramentas utilizadas
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
+- Vue 3
 
+- Quasar Framework
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
+- Internacionalização (i18n)
+
+- Animate.css
+
+- Supabase
 
 
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
+## 👨‍💻 Funcionalidades 
+- Autenticação externa (Google)
+- Salvar bebidas
+- Edição de bebidas salvas
+- Alterar idioma do aplicativo
+- Modo escuro
 
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+## 🚧 Funcionalidades em desenvolvimento
+- Comparação entre bebidas
+- Adicionar categorias de bebidas no cadastro
