@@ -13,13 +13,31 @@ const formatCurrency = (value) => {
   return formatted;
 };
 
-const formatUnitMeasure = (unit, locale) => {
-  if (unit > 1000) {
-    let unitTreated = unit / 1000;
-    return parseFloat(unitTreated.toFixed(2)).toLocaleString(locale) + " L";
+const formatAbv = (abv) => {
+  if (abv >= 10) {
+    let formatted = (abv / 10).toFixed(1);
+    let max = 100.0;
+    return Math.min(formatted, max);
   }
 
-  return parseFloat(unit.toFixed(2)).toLocaleString(locale) + " ml";
+  return abv;
+};
+
+const formatPrice = (price) => {
+  return price > 100 ? price / 100 : price;
+};
+
+const formatUnitMeasure = (unit) => {
+  const { locale } = useI18n();
+
+  if (unit > 1000) {
+    let unitTreated = unit / 1000;
+    return (
+      parseFloat(unitTreated.toFixed(2)).toLocaleString(locale.value) + " L"
+    );
+  }
+
+  return parseFloat(unit.toFixed(2)).toLocaleString(locale.value) + " ml";
 };
 
 const formatPercent = (percent) => {
@@ -30,7 +48,7 @@ const formatPercent = (percent) => {
 
 const formatAmountAlcohol = (abv, ml) => {
   if (abv && ml) {
-    const abvFormatted = abv / 100;
+    const abvFormatted = formatAbv(abv) / 100;
     const amount = ml * abvFormatted;
     const formatted = formatUnitMeasure(amount);
 
@@ -41,9 +59,12 @@ const formatAmountAlcohol = (abv, ml) => {
 };
 
 const formatPriceLiterBeverage = (price, ml) => {
+  const { locale } = useI18n();
+
   if (price && ml) {
+    const priceFormatted = formatPrice(price);
     const mlFormatted = 1000 / ml;
-    const priceLiter = mlFormatted * price;
+    const priceLiter = mlFormatted * priceFormatted;
     const formatted = formatCurrency(priceLiter);
 
     return formatted;
@@ -54,12 +75,12 @@ const formatPriceLiterBeverage = (price, ml) => {
 
 const formatPriceLiterAlcohol = (abv, ml, price) => {
   if (abv && ml && price) {
-    const abvFormatted = abv / 100;
+    const abvFormatted = formatAbv(abv) / 100;
     const mlFormatted = ml / 1000;
 
     const amount = mlFormatted * abvFormatted;
 
-    const priceLiter = price / amount;
+    const priceLiter = formatPrice(price) / amount;
 
     const formatted = formatCurrency(priceLiter);
 
@@ -76,4 +97,6 @@ export {
   formatAmountAlcohol,
   formatPriceLiterBeverage,
   formatPriceLiterAlcohol,
+  formatAbv,
+  formatPrice
 };
