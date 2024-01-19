@@ -1,6 +1,6 @@
 # <a href="https://calcohol.vercel.app" target="_blank"> Calcohol </a>
 
-O Calcohol surgiu do desejo de poder calcular o custo/benefício de cada bebida e fornecer uma análise detalhada, permitindo aos usuários fazerem escolhas informadas ao comprar suas opções de bebida preferidas.
+O Calcohol surgiu do desejo de poder calcular o custo/benefício de cada bebida através da comparação da porcentagem alcoólica, preço e volume, a fim de fornecer uma análise detalhada, permitindo aos usuários fazerem escolhas informadas ao comprar suas opções de bebida preferidas e salvar em seu perfil as análises desejadas.
 
 <a href="https://calcohol.vercel.app" target="_blank"> O projeto já se encontra disponível aqui! </a>
   
