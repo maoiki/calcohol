@@ -54,6 +54,11 @@ export default {
   deleteConfirmation: 'Do you really want to delete "{beverage}"?',
   close: "Close",
   details: "Details",
+  thanksRegistering: "Thanks for registering!",
+  emailConfirmation: {
+    pt1: "An email was sent to: ",
+    pt2: "Please check your inbox to confirm your account.",
+  },
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",

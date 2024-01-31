@@ -7,19 +7,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page class="q-pa-md">
-    <h1>Thanks for registering!</h1>
-    <p class="text-body1">
-      Please confirm your email address to complete the registration:
-      <strong>{{ $route.query.email }}</strong>
+  <q-page class="flex column items-center q-pa-md">
+    <h1 class="welcome">{{ $t("thanksRegistering") }}</h1>
+    <p>
+      {{ $t("emailConfirmation.pt1")}}
+      <strong>{{$route.query.email}}</strong>
     </p>
-    <div class="col-md-4 col-sm-6 col-xs-10 flex flex-center">
+    <p>{{ $t("emailConfirmation.pt2")}}</p>
       <q-btn
-        label="Go back to login"
-        color="primary"
+        class="max-w-400"
+        :label="$t('goBack')"
         :to="{ name: 'login' }"
-        rounded
+        v-bind="{ ...$visualTextButton }"
       />
-    </div>
   </q-page>
 </template>

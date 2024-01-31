@@ -17,7 +17,7 @@ export default defineComponent({
 
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-toolbar-title>
           <router-link

@@ -57,7 +57,6 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
-        console.log(leftDrawerOpen.value)
       },
     };
   },
