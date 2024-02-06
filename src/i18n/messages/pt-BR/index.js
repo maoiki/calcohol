@@ -60,6 +60,8 @@ export default {
     pt1: "Foi enviado um email para: ",
     pt2: "Por favor confira em sua caixa de entrada para confirmar sua conta.",
   },
+  newContent: "Uma nova versão está disponível",
+  refresh: "Atualizar",
 
   signInGoogle: "Entrar com o Google",
   signUpGoogle: "Cadastrar com o Google",

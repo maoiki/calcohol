@@ -59,6 +59,8 @@ export default {
     pt1: "An email was sent to: ",
     pt2: "Please check your inbox to confirm your account.",
   },
+  newContent: "A new version is available",
+  refresh: "Refresh",
 
   signInGoogle: "Sign in with Google",
   signUpGoogle: "Sign up with Google",

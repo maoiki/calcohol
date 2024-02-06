@@ -19,8 +19,21 @@ export default function useNotify() {
     });
   };
 
+  const notifyUpdate = (message) => {
+    $q.notify({
+      message: message || t("newContent"),
+      icon: "fas fa-download",
+      closeBtn: t("refresh"),
+      timeout: 10000,
+      onDismiss() {
+        location.reload(true);
+      },
+    });
+  };
+
   return {
     notifySuccess,
     notifyError,
+    notifyUpdate
   };
 }
