@@ -65,11 +65,19 @@ export default defineComponent({
       }
     };
 
+    const goBack = () => {
+      router.go(-1);
+    };
+
     const isUpdate = computed(() => route.params.id);
+    const formData = computed(() => route.query)
+    const isFormDataFilled = Object.keys(formData.value).length !== 0
 
     onMounted(() => {
       if (isUpdate.value) {
         handleGetBeverage(isUpdate.value);
+      } else if (isFormDataFilled) {
+        form.value = formData.value
       }
     });
 
@@ -80,6 +88,7 @@ export default defineComponent({
       drinkNameValidation,
       validateAbv,
       above0Validation,
+      goBack
     };
   },
 });
@@ -147,7 +156,7 @@ export default defineComponent({
       />
       <q-btn
         :label="$t('cancel')"
-        :to="{ name: 'me' }"
+        @click="goBack"
         v-bind="{ ...$visualTextButton }"
       />
     </q-form>

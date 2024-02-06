@@ -22,7 +22,6 @@ export default defineComponent({
     const { isLoggedIn } = useAuthUser();
 
     const form = ref({
-      name: "",
       ml: "",
       abv: "",
       price: "",
@@ -35,10 +34,8 @@ export default defineComponent({
     };
 
     const validateAbv = () => {
-      const abv = parseFloat(form.value.abv);
-
-      if (abv > 100) {
-        form.value.abv = "100.0";
+      if (form.value.abv > 1000) {
+        form.value.abv = 1000;
       }
     };
 
@@ -49,7 +46,7 @@ export default defineComponent({
 
     const handleRedirectLogin = () => {
       if (isLoggedIn()) {
-        router.replace({ name: "form-beverage" });
+        router.push({ name: "form-beverage", query: form.value });
       } else {
         $q.dialog({
           title: t("redirectLoginTitle"),
@@ -66,7 +63,7 @@ export default defineComponent({
           },
           persistent: false,
         }).onOk(() => {
-          router.replace({ name: "login" });
+          router.push({ name: "login" });
         });
       }
     };

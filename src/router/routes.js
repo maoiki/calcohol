@@ -46,6 +46,9 @@ const routes = [
         path: "/form/:id?",
         name: "form-beverage",
         component: () => import("pages/FormBeverage.vue"),
+        props: (route) => ({
+          formData: route.query,
+        }),
       },
     ],
     meta: {
