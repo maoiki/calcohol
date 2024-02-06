@@ -126,6 +126,8 @@ export default defineComponent({
       v-model:pagination="noPagination"
       :hide-pagination="true"
       grid
+      :no-data-label="$t('noResultsTable')"
+      :no-results-label="$t('noResultsSearch')"
     >
       <template v-slot:top-right>
         <q-input

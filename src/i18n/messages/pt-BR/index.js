@@ -73,6 +73,9 @@ export default {
   passwordRequired: "É necessário informar uma senha",
   passwordMinimum: "A senha deve possuir no mínimo 6 caracteres",
 
+  noResultsSearch: "Não foram encontrados resultados para essa busca",
+  noResultsTable: "Você ainda não registrou nenhuma bebida :( Que tal registrar agora?",
+
   home: "Início",
   addDrink: "Adicionar bebida",
   profile: "Perfil",

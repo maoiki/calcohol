@@ -72,6 +72,10 @@ export default {
   passwordRequired: "Password is required",
   passwordMinimum: "Password must contain at least 6 characters",
 
+  noResultsSearch: "No results were found for this search",
+  noResultsTable:
+    "You haven't registered any drinks yet :( What about registering now?",
+
   home: "Home",
   addDrink: "Add drink",
   profile: "Profile",
