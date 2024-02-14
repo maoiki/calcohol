@@ -54,8 +54,9 @@ export default defineComponent({
     };
 
     const compareMore = ref(true);
-
+    const selectedOption = ref(null);
     const tableValues = ref([]);
+
     const handleGetBeverageList = async (table) => {
       try {
         tableValues.value = await list(table);
@@ -68,6 +69,7 @@ export default defineComponent({
       let beverage = {};
       try {
         beverage = await getById(table, id);
+        selectedOption.value = beverage;
         form.value = beverage;
       } catch (error) {
         notifyError(error.message);
@@ -75,17 +77,20 @@ export default defineComponent({
     };
 
     const idBeverage = computed(() => route.params.id);
+    const formData = computed(() => route.query);
+    const isFormDataFilled = Object.keys(formData.value).length !== 0;
 
     onMounted(() => {
-      if (idBeverage.value && isLoggedIn()) {
-        handleGetBeverage(idBeverage.value);
-      }
       if (isLoggedIn()) {
         handleGetBeverageList(table);
       }
-    });
 
-    const selectedOption = ref(null);
+      if (idBeverage.value && isLoggedIn()) {
+        handleGetBeverage(idBeverage.value);
+      } else if (isFormDataFilled) {
+        form.value = formData.value;
+      }
+    });
 
     watch(selectedOption, (newVal) => {
       form.value = { ...newVal };
@@ -151,7 +156,7 @@ export default defineComponent({
         v-model="form.abv"
         :label="$t('abvLabel')"
         :mask="$t('percentMask')"
-        v-bind="{ ...$visualInput, ...$visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable, ...$formAbvInput }"
         @update:model-value="validateAbv"
       />
       <q-input
@@ -159,7 +164,7 @@ export default defineComponent({
         :label="$t('priceLabel')"
         :prefix="$t('currencySymbol')"
         :mask="$t('priceMask')"
-        v-bind="{ ...$visualInput, ...$visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable, ...$formPriceInput }"
       />
     </div>
 

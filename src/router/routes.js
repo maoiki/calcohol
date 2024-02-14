@@ -12,6 +12,9 @@ const routes = [
         path: "/compare/:id?",
         name: "comparison",
         component: () => import("pages/ComparisonPage.vue"),
+        props: (route) => ({
+          formData: route.query,
+        }),
       },
     ],
   },
