@@ -98,37 +98,25 @@ export default defineComponent({
         />
       </div>
       <q-input
-        maxlength="9"
         :mask="$t('mlMask')"
-        unmasked-value
-        reverse-fill-mask
         v-model="form.ml"
         :label="$t('amountLabel')"
-        inputmode="decimal"
-        v-bind="{ ...$visualInput, ...$visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable, ...$formMlInput }"
       />
 
       <q-input
-        maxlength="5"
         v-model="form.abv"
         :label="$t('abvLabel')"
-        inputmode="decimal"
         :mask="$t('percentMask')"
-        unmasked-value
-        reverse-fill-mask
-        v-bind="{ ...$visualInput, ...$visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable, ...$formAbvInput }"
         @update:model-value="validateAbv"
       />
       <q-input
-        maxlength="10"
         v-model="form.price"
         :label="$t('priceLabel')"
         :prefix="$t('currencySymbol')"
-        inputmode="decimal"
         :mask="$t('priceMask')"
-        unmasked-value
-        reverse-fill-mask
-        v-bind="{ ...$visualInput, ...$visualClearable }"
+        v-bind="{ ...$visualInput, ...$visualClearable, ...$formPriceInput }"
       />
     </div>
 
