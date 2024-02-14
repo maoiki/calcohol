@@ -7,6 +7,7 @@ export default {
 
   indexTitle: "Detalhes da bebida",
   results: "Resultados",
+  compareTitle: "Compare bebidas",
 
   saveDrinkTitle: "Salve sua bebida",
 
@@ -76,11 +77,13 @@ export default {
   passwordMinimum: "A senha deve possuir no mínimo 6 caracteres",
 
   noResultsSearch: "Não foram encontrados resultados para essa busca",
-  noResultsTable: "Você ainda não registrou nenhuma bebida :( Que tal registrar agora?",
+  noResultsTable:
+    "Você ainda não registrou nenhuma bebida :( Que tal registrar agora?",
 
   home: "Início",
   addDrink: "Adicionar bebida",
   profile: "Perfil",
+  compare: "Compare",
 
   updateSuccess: "Atualizado com sucesso",
   saveSuccess: "Salvo com sucesso",

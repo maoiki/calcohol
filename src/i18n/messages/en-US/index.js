@@ -7,6 +7,7 @@ export default {
 
   indexTitle: "Beverage details",
   results: "Results",
+  compareTitle: "Compare beverages",
 
   saveDrinkTitle: "Save beverage",
 
@@ -81,6 +82,7 @@ export default {
   home: "Home",
   addDrink: "Add drink",
   profile: "Profile",
+  compare: "Compare",
 
   updateSuccess: "Updated successfully",
   saveSuccess: "Saved successfully",

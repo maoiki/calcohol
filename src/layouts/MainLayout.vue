@@ -3,13 +3,18 @@ import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 import DarkModeToggle from "components/DarkModeToggle.vue";
 import LanguageToggle from "src/components/LanguageToggle.vue";
-import { useI18n } from "vue-i18n";
 
 const menuTop = [
   {
     title: "home",
     icon: "fas fa-home",
     routeName: "index",
+    alwaysShow: true,
+  },
+  {
+    title: "compare",
+    icon: "fas fa-right-left",
+    routeName: "comparison",
     alwaysShow: true,
   },
   {

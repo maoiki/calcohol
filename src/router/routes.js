@@ -8,6 +8,11 @@ const routes = [
         name: "index",
         component: () => import("pages/IndexPage.vue"),
       },
+      {
+        path: "/compare/:id?",
+        name: "comparison",
+        component: () => import("pages/ComparisonPage.vue"),
+      },
     ],
   },
   {
