@@ -8,6 +8,7 @@ export default {
   indexTitle: "Beverage details",
   results: "Results",
   compareTitle: "Compare beverages",
+  genericBeverage: "Beverage {number}",
 
   saveDrinkTitle: "Save beverage",
 

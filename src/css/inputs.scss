@@ -1,9 +1,3 @@
-.inputs {
-  background-color: $surface-light;
+.q-field--filled .q-field__control {
   border-radius: $border-radius;
-  padding: 0 16px;
-}
-
-body.body--dark .inputs {
-  background-color: $surface-dark;
 }

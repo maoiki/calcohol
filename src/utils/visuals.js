@@ -1,6 +1,5 @@
 const input = {
-  class: "inputs",
-  borderless: true,
+  filled: true,
 };
 
 const clearableInput = {

@@ -18,9 +18,6 @@ export default defineComponent({
   name: "ComparisonPage",
 
   setup() {
-    const { t } = useI18n();
-    const $q = useQuasar();
-    const router = useRouter();
     const route = useRoute();
     const { isLoggedIn } = useAuthUser();
     const { getById, list } = useApi();
@@ -34,27 +31,26 @@ export default defineComponent({
       price: "",
     });
 
-    const form2 = ref({
-      name: "",
-      ml: "",
-      abv: "",
-      price: "",
-    });
+    const forms = ref([
+      { selectedOption: null, data: { ml: "", abv: "", price: "" } },
+      { selectedOption: null, data: { ml: "", abv: "", price: "" } },
+    ]);
 
-    const handleResetFields = () => {
-      form.value.ml = "";
-      form.value.abv = "";
-      form.value.price = "";
+    const handleResetFields = (form) => {
+      form.data.ml = "";
+      form.data.abv = "";
+      form.data.price = "";
+      form.data.name = "";
+      form.selectedOption = null;
     };
 
-    const validateAbv = () => {
-      if (form.value.abv > 1000) {
-        form.value.abv = 1000;
+    const validateAbv = (form) => {
+      if (form.data.abv > 1000) {
+        form.data.abv = 1000;
       }
     };
 
     const compareMore = ref(true);
-    const selectedOption = ref(null);
     const tableValues = ref([]);
 
     const handleGetBeverageList = async (table) => {
@@ -69,8 +65,8 @@ export default defineComponent({
       let beverage = {};
       try {
         beverage = await getById(table, id);
-        selectedOption.value = beverage;
-        form.value = beverage;
+        forms.value[0].selectedOption = beverage;
+        forms.value[0].data = beverage;
       } catch (error) {
         notifyError(error.message);
       }
@@ -92,13 +88,24 @@ export default defineComponent({
       }
     });
 
-    watch(selectedOption, (newVal) => {
-      form.value = { ...newVal };
+    forms.value.forEach((form) => {
+      watch(
+        () => form.selectedOption,
+        (newVal) => {
+          form.selectedOption = newVal;
+          form.data = { ...newVal };
+        }
+      );
     });
 
     const showResults = () => {
-      let r = form.value.ml && (form.value.abv || form.value.price);
-      return !!r;
+      return forms.value.some((form) => {
+        return form.data.ml && (form.data.abv || form.data.price);
+      });
+    };
+
+    const canResetField = (form) => {
+      return form.abv || form.ml || form.price;
     };
 
     return {
@@ -110,8 +117,9 @@ export default defineComponent({
       showResults,
       validateAbv,
       tableValues,
-      selectedOption,
       compareMore,
+      forms,
+      canResetField,
     };
   },
 });
@@ -119,7 +127,7 @@ export default defineComponent({
 <template>
   <q-page class="flex column q-pa-md">
     <div
-      :class="$q.platform.is.mobile ? '' : 'max_container  q-mx-auto'"
+      :class="$q.platform.is.mobile ? '' : 'q-mx-auto'"
       class="q-gutter-y-md"
     >
       <div class="row flex-center">
@@ -132,59 +140,69 @@ export default defineComponent({
           @click="compareMore = !compareMore"
         />
       </div>
-
-      <q-select
-        v-model="selectedOption"
-        :options="tableValues"
-        :label="$t('name')"
-        :option-value="
-          (opt) => (Object(opt) === opt && 'id' in opt ? opt.id : null)
-        "
-        :option-label="
-          (opt) =>
-            Object(opt) === opt && 'name' in opt ? opt.name : '- Null -'
-        "
-      />
-      <q-input
-        :mask="$t('mlMask')"
-        v-model="form.ml"
-        :label="$t('amountLabel')"
-        v-bind="{ ...$visualInput, ...$visualClearable, ...$formMlInput }"
-      />
-
-      <q-input
-        v-model="form.abv"
-        :label="$t('abvLabel')"
-        :mask="$t('percentMask')"
-        v-bind="{ ...$visualInput, ...$visualClearable, ...$formAbvInput }"
-        @update:model-value="validateAbv"
-      />
-      <q-input
-        v-model="form.price"
-        :label="$t('priceLabel')"
-        :prefix="$t('currencySymbol')"
-        :mask="$t('priceMask')"
-        v-bind="{ ...$visualInput, ...$visualClearable, ...$formPriceInput }"
-      />
+      <div class="row q-gutter-x-md">
+        <div
+          v-for="(form, index) in forms"
+          :key="index"
+          class="q-gutter-y-md q-mb-lg"
+        >
+          <q-select
+            v-model="form.selectedOption"
+            v-bind="{ ...$visualInput, ...$visualClearable }"
+            :options="tableValues"
+            :label="$t('name')"
+            :option-value="
+              (opt) => (Object(opt) === opt && 'id' in opt ? opt.id : null)
+            "
+            :option-label="
+              (opt) =>
+                Object(opt) === opt && 'name' in opt ? opt.name : '- Null -'
+            "
+          />
+          <q-input
+            :mask="$t('mlMask')"
+            v-model="form.data.ml"
+            :label="$t('amountLabel')"
+            v-bind="{ ...$visualInput, ...$visualClearable, ...$formMlInput }"
+          />
+          <q-input
+            v-model="form.data.abv"
+            :label="$t('abvLabel')"
+            :mask="$t('percentMask')"
+            v-bind="{ ...$visualInput, ...$visualClearable, ...$formAbvInput }"
+            @update:model-value="validateAbv(form)"
+          />
+          <q-input
+            v-model="form.data.price"
+            :label="$t('priceLabel')"
+            :prefix="$t('currencySymbol')"
+            :mask="$t('priceMask')"
+            v-bind="{
+              ...$visualInput,
+              ...$visualClearable,
+              ...$formPriceInput,
+            }"
+          />
+          <transition
+            appear
+            enter-active-class="animated fadeInUp"
+            leave-active-class="animated fadeOutDown"
+          >
+            <q-btn
+              @click="handleResetFields(form)"
+              no-caps
+              class="q-mt-md"
+              flat
+              rounded
+              color="grey-7"
+              icon="fas fa-rotate-left"
+              :label="$t('reset')"
+              v-if="canResetField(form.data)"
+            />
+          </transition>
+        </div>
+      </div>
     </div>
-
-    <transition
-      appear
-      enter-active-class="animated fadeInUp"
-      leave-active-class="animated fadeOutDown"
-    >
-      <q-btn
-        @click="handleResetFields"
-        no-caps
-        class="q-mt-md q-mx-auto q-mt-sm q-mb-lg"
-        flat
-        rounded
-        color="grey-7"
-        icon="fas fa-rotate-left"
-        :label="$t('reset')"
-        v-if="form.abv || form.ml || form.price"
-      />
-    </transition>
 
     <transition
       appear
@@ -193,19 +211,18 @@ export default defineComponent({
     >
       <div
         v-if="showResults()"
-        class="q-pa-md container_bg rounded_container"
-        :class="
-          $q.platform.is.desktop ? 'q-mx-auto max_container' : 'no-margin'
-        "
+        class="q-pa-md row container_bg rounded_container gap-16px"
+        :class="$q.platform.is.desktop ? 'q-mx-auto' : 'no-margin'"
         key="result"
       >
-        <h1
-          class="results_title q-mt-none"
-          :class="$q.platform.is.desktop ? 'title_results' : ''"
+        <div
+          class="column flex-center"
+          v-for="(form, index) in forms"
+          :key="index"
         >
-          {{ $t("results") }}
-        </h1>
-        <div class="row q-gutter-md flex-center">
+          <h1 class="results_title">
+            {{ form.data.name || $t("genericBeverage", { number: index + 1 }) }}
+          </h1>
           <q-card
             flat
             class="rounded_container"
@@ -217,7 +234,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("amountAlcohol") }} </q-card-section>
             <q-card-section>
-              {{ formatAmountAlcohol(form.abv, form.ml) }}
+              {{ formatAmountAlcohol(form.data.abv, form.data.ml) }}
             </q-card-section>
           </q-card>
           <q-card
@@ -231,7 +248,7 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("priceBeverage") }} </q-card-section>
             <q-card-section>
-              {{ formatPriceLiterBeverage(form.price, form.ml) }}
+              {{ formatPriceLiterBeverage(form.data.price, form.data.ml) }}
             </q-card-section>
           </q-card>
           <q-card
@@ -245,7 +262,13 @@ export default defineComponent({
           >
             <q-card-section> {{ $t("priceAlcohol") }} </q-card-section>
             <q-card-section>
-              {{ formatPriceLiterAlcohol(form.abv, form.ml, form.price) }}
+              {{
+                formatPriceLiterAlcohol(
+                  form.data.abv,
+                  form.data.ml,
+                  form.data.price
+                )
+              }}
             </q-card-section>
           </q-card>
         </div>

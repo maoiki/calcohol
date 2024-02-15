@@ -7,16 +7,12 @@
   width: min(70%, 700px);
 }
 
-.max_container2{
-width: min(70%, 688px);
-}
-
 .rounded_container {
   border-radius: $border-radius;
 }
 
 .result_card {
-  display:flex;
+  display: flex;
   justify-content: space-between;
   width: 100%;
   border-radius: $border-radius;
@@ -85,4 +81,8 @@ body.body--light {
 
 .max-w-400 {
   max-width: 400px;
+}
+
+.gap-16px {
+  gap: 16px;
 }
