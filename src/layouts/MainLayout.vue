@@ -12,12 +12,6 @@ const menuTop = [
     alwaysShow: true,
   },
   {
-    title: "compare",
-    icon: "fas fa-right-left",
-    routeName: "comparison",
-    alwaysShow: true,
-  },
-  {
     title: "addDrink",
     icon: "fas fa-plus",
     routeName: "form-beverage",
